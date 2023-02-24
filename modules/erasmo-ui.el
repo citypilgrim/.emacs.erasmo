@@ -1,5 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
+;; minimalist look
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+
 ;; time on modeline
 (setenv "TZ" "UTC-8")
 (display-time-mode 1)
@@ -7,7 +12,7 @@
 (customize-set-variable 'display-time-default-load-average nil)
 
 ;; fonts
-(defvar erasmo-ui/font-scale-factor 1)
+(defvar erasmo-ui/font-scale-factor 0.85)
 (defvar erasmo-ui/font-size 142)
 
 ;; fix up the font setting function
