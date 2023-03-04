@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+(require 'flycheck)
 
 ;; columne numbering in modeline
 (column-number-mode)
@@ -15,5 +16,10 @@
 
 ;; text wrapping
 (add-hook 'prog-mode-hook '(lambda () (toggle-truncate-lines 1)))
+
+;; linting
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 (provide 'erasmo-ide)

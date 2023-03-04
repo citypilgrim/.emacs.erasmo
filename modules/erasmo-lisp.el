@@ -1,18 +1,20 @@
 ;; -*- lexical-binding: t; -*-
+(require 'yasnippet)
 
+;; tree editing
 (use-package lispy
   :hook
   (emacs-lisp-mode . lispy-mode)
   (scheme-mode . lisp-mode))
 
 (use-package geiser
-  :init
-  (setq geiser-default-implementation 'guile)
-  (setq geiser-active-implementations '(guile))
-  ;; (setq geiser-guile-binary "/root/.guix-profile/bin/guile")
-  ;; (setq geiser-repl-default-port 44555) ; For Gambit Scheme
-  (setq geiser-repl-skip-version-check-p 't)
-  (setq geiser-implementations-alist '(((regexp "\\.scm$") guile)))
+  :custom
+  (geiser-default-implementation 'guile)
+  (geiser-active-implementations '(guile))
+  ;; (geiser-guile-binary "/root/.guix-profile/bin/guile")
+  ;; (geiser-repl-default-port 44555) ; For Gambit Scheme
+  (geiser-repl-skip-version-check-p 't)
+  (geiser-implementations-alist '(((regexp "\\.scm$") guile)))
   )
 
 (use-package geiser-guile)
