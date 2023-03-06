@@ -18,16 +18,24 @@
 (add-to-list 'load-path
 	     (concat user-emacs-directory "modules"))
 
+;; Add environment variables to load path
+(add-to-list 'load-path "~/.dotfiles/.env/emacs")
+
 ;; Load pertinent modules
 ;; order matters
+(require 'erasmo-env)
 (require 'erasmo-package)
 (require 'erasmo-performance)
 (require 'erasmo-defaults)
-;; order agnostic
 (require 'erasmo-keybind)
+(require 'erasmo-completion)
+;; order agnostic
 (require 'erasmo-ux)
 (require 'erasmo-ui)
 (require 'erasmo-ide)
 (require 'erasmo-lisp)
 (require 'erasmo-vc)
+(require 'erasmo-short)
+(require 'erasmo-sword)
+(require 'erasmo-shell)
 

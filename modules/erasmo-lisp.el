@@ -1,5 +1,4 @@
 ;; -*- lexical-binding: t; -*-
-(require 'yasnippet)
 
 ;; tree editing
 (use-package lispy
@@ -32,3 +31,5 @@
    (unless (listp 'tempel-path)
      (setq tempel-path (list tempel-path)))
    (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
+
+(provide 'erasmo-lisp)

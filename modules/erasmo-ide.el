@@ -1,13 +1,12 @@
 ;; -*- lexical-binding: t; -*-
-(require 'flycheck)
 
 ;; columne numbering in modeline
 (column-number-mode)
 
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook
-                prog-mode-hook
-                conf-mode-hook))
+		prog-mode-hook
+		conf-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 1))))
 
 ;; Override some modes which derive from the above
@@ -20,6 +19,7 @@
 ;; linting
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
+  :init
+  (global-flycheck-mode))
 
 (provide 'erasmo-ide)

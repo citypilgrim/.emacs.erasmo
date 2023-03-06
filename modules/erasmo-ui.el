@@ -12,31 +12,32 @@
 (customize-set-variable 'display-time-default-load-average nil)
 
 ;; fonts
-(defvar erasmo-ui/font-scale-factor 0.85)
-(defvar erasmo-ui/font-size 142)
+(defvar erasmo-ui--font-scale-factor 0.85)
+(defvar erasmo-ui--font-size 142)
 
 ;; fix up the font setting function
-(defun erasmo-ui/set-font-size (&optional SCALE-FACTOR)
+(defun erasmo-ui-set-font-size (&optional SCALE-FACTOR)
   (interactive "nFont scale factor: ")
   (if SCALE-FACTOR
-      (setq erasmo-ui/font-scale-factor SCALE-FACTOR))
-  (erasmo-ui/set-font))
+      (setq erasmo-ui--font-scale-factor SCALE-FACTOR))
+  (erasmo-ui-set-font))
 
-(defun erasmo-ui/set-font ()
+(defun erasmo-ui-set-font ()
   ;; default font face
   (set-face-attribute 'default nil
-                      :height (ceiling (* erasmo-ui/font-size erasmo-ui/font-scale-factor)))
+                      :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor)))
 
   ;; Set the fixed pitch face
   (set-face-attribute 'fixed-pitch nil
-                      :height (ceiling (* erasmo-ui/font-size erasmo-ui/font-scale-factor)))
+                      :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor)))
 
   ;; Set the variable pitch face
   (set-face-attribute 'variable-pitch nil
-                      :height (ceiling (* erasmo-ui/font-size erasmo-ui/font-scale-factor))))
+                      :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor))))
 
-(erasmo-ui/set-font)
+(erasmo-ui-set-font)
 
+;; pretty icons
 (use-package all-the-icons
   :custom
   (all-the-icons-scale-factor 1))
@@ -89,7 +90,7 @@
 
 (use-package autumn-light-theme :defer t)
 
-(defun erasmo-ui/load-theme (theme)
+(defun erasmo-ui-load-theme (theme)
   "Enhance `load-theme' by first disabling enabled themes."
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme theme t)
@@ -98,7 +99,42 @@
   ;;       (peregrino/org-mode-setup)
   ;;       (peregrino/set-org-agenda-files)))
   )
+(erasmo-ui-load-theme 'doom-zenburn)
 
-(erasmo-ui/load-theme 'doom-zenburn)
+;; theme toggle
+(defhydra erasmo-ui-hydra-theme-switcher (:hint nil)
+  "
+         Dark                ^Light^
+    ----------------------------------------------
+    _1_ zenburn          _w_ flatwhite
+    _2_ ample            _e_ autumn
+    _3_ darktooth       ^
+    _4_ snazzy           ^
+    _5_ old-hope         ^
+    _6_ henna                ^
+    _7_ palenight            ^
+    _8_ peacock              ^
+    _q_ quit                 ^
+    ^                        ^
+    "
+  ;; Dark
+  ("1" (peregrino/load-theme 'doom-zenburn) "zenburn")
+  ("2" (peregrino/load-theme 'ample-flat) "ample")
+  ("3" (peregrino/load-theme 'darktooth-dark) "darktooth")
+  ("4" (peregrino/load-theme 'doom-snazzy) "snazzy")
+  ("5" (peregrino/load-theme 'doom-old-hope) "old-hope")
+  ("6" (peregrino/load-theme 'doom-henna) "henna")
+  ("7" (peregrino/load-theme 'doom-palenight) "doom-palenight")
+  ("8" (peregrino/load-theme 'doom-peacock) "peacock")
+
+  ;; Light
+  ("w" (peregrino/load-theme 'doom-flatwhite) "flatwhite")
+  ("e" (peregrino/load-theme 'autumn-light) "autumn")
+  ("r" (peregrino/load-theme 'marquardt) "marquardt")
+
+  ("q" nil))
+
+(erasmo-keybind-leader-key-def
+ "tm" '(erasmo-ui-hydra-theme-switcher/body :which-key "choose theme"))
 
 (provide 'erasmo-ui)

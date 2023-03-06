@@ -1,5 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
+;; Persist history over Emacs restarts. Vertico sorts by history position.
+(use-package savehist
+  :init
+  (savehist-mode))
+
 ;; prevent emacs from popping new windows when we run commands
 (setq display-buffer-base-action
       '(display-buffer-reuse-mode-window
