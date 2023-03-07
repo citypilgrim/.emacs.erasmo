@@ -84,7 +84,8 @@
 
 ;; provides practical commands
 (use-package consult
-  :bind (("C-s" . consult-line)))
+  :bind (("C-s" . consult-line)
+         ("C-M-j" . consult-buffer)))
 
 (use-package emacs
   :bind (("C-r" . consult-history))

@@ -12,14 +12,4 @@
   :custom
   (eshell-prompt-function #'epe-theme-dakrone))
 
-;; quick access eshell
-(use-package eshell-toggle
-  :after projectile
-  :custom
-  (eshell-toggle-use-projectile-root t)
-  (eshell-toggle-run-command nil)
-  :bind
-  ("M-`" . eshell-toggle))
-
-
 (provide 'erasmo-shell)

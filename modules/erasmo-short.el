@@ -36,7 +36,7 @@
   "fb" '((lambda () (interactive) (find-file "~/handbook/biblio.bib")) :which-key "biblio")
   "fc" '((lambda () (interactive) (consult-find "~/.emacs.d" "erasmo-")) :which-key "config")
   "fC" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "config")
-  "fg" '((lambda () (interactive) (find-file "~/handbook/agenda/org-gcal.org")) :which-key "gcal")
+  "fg" '((lambda () (interactive) (find-file "~/.dotfiles/erasmo/systems/base.scm")) :which-key "guix")
   "fs" '((lambda () (interactive) (find-file "~/handbook/slipbox.org")) :which-key "slipbox")
 
   ;; notes
