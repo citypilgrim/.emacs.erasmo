@@ -78,10 +78,10 @@
   "Enhance `load-theme' by first disabling enabled themes."
   (mapc #'disable-theme custom-enabled-themes)
   (load-theme theme t)
-  ;; (if (string-equal major-mode "org-mode")
-  ;;     (progn
-  ;;       (erasmo-org-mode-setup)
-  ;;       (erasmo-set-org-agenda-files)))
+  (if (string-equal major-mode "org-mode")
+      (progn
+        (erasmo-org-mode-setup)
+        (erasmo-org-set-org-agenda-files)))
   )
 (erasmo-ui--load-theme 'doom-zenburn)
 

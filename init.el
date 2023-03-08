@@ -35,7 +35,9 @@
 (require 'erasmo-ide)
 (require 'erasmo-lisp)
 (require 'erasmo-vc)
-(require 'erasmo-short)
-(require 'erasmo-sword)
+(require 'erasmo-books)
+(require 'erasmo-data)
 (require 'erasmo-shell)
+(require 'erasmo-org)
+(require 'erasmo-web)
 
