@@ -3,7 +3,7 @@
 ;; core config
 (use-package org
   :defer nil
-  :hook (org-mode . erasmo-org-org-mode-setup)
+  :hook (org-mode . erasmo-org-mode-setup)
   :custom
   (org-ellipsis " ▾")
   (org-hide-emphasis-markers t)
@@ -31,7 +31,7 @@
   (let ((org-confirm-babel-evaluate nil))
     (org-babel-tangle)))
 
-(defun erasmo-org-org-mode-setup ()
+(defun erasmo-org-mode-setup ()
   ;; turn on indentation and auto-fill mode for org files
   (org-indent-mode)
   (diminish 'org-indent-mode)

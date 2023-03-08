@@ -11,7 +11,7 @@
 (customize-set-variable 'display-time-default-load-average nil)
 
 ;; fonts
-(defvar erasmo-ui--font-scale-factor 0.85)
+(defvar erasmo-ui--font-scale-factor erasmo-env-font-scale-factor)
 (defvar erasmo-ui--font-size 142)
 
 ;; fix up the font setting function
@@ -129,13 +129,9 @@
 
 ;; pretty modeline
 (use-package doom-modeline
-  :init
-  (doom-modeline-mode 1)
+  :config
   (custom-set-faces '(mode-line ((t (:height 0.85))))
                     '(mode-line-inactive ((t (:height 0.85)))))
-  (doom-modeline-def-modeline 'default
-    '(bar window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(objed-state grip debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
   :custom
   (doom-modeline-height 15)
   (doom-modeline-bar-width 6)
@@ -147,6 +143,18 @@
   (doom-modeline-persp-name nil)
   (doom-modeline-buffer-file-name-style 'truncate-except-project)
   (doom-modeline-major-mode-icon t))
+
+(defun erasmo-ui--start-doom-modeline ()
+  (require 'doom-modeline)
+  ;; Start it
+  (doom-modeline-mode 1)
+  ;; Customize the default modeline
+  (doom-modeline-def-modeline 'default
+    '(bar window-number modals matches buffer-info remote-host buffer-position word-count parrot selection-info)
+    '(objed-state grip debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
+  (doom-modeline-set-modeline 'default t))
+
+(add-hook 'after-init-hook #'erasmo-ui--start-doom-modeline)
 
 ;; rainbow dired
 (use-package dired-rainbow

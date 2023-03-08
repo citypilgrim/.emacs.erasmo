@@ -25,7 +25,7 @@
   :after org
   :no-require
   :custom
-  (org-cite-global-bibliography `(,peregrino-env/biblio))
+  (org-cite-global-bibliography `(,erasmo-env-biblio))
   (org-cite-insert-processor 'citar)
   (org-cite-follow-processor 'citar)
   (org-cite-activate-processor 'citar)

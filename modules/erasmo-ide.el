@@ -14,7 +14,7 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;; text wrapping
-(add-hook 'prog-mode-hook '(lambda () (toggle-truncate-lines 1)))
+(add-hook 'prog-mode-hook #'(lambda () (toggle-truncate-lines 1)))
 
 ;; linting
 (use-package flycheck
