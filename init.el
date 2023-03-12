@@ -22,14 +22,12 @@
 (add-to-list 'load-path "~/.dotfiles/.env/emacs")
 
 ;; Load pertinent modules
-;; order matters
 (require 'erasmo-env)
 (require 'erasmo-package)
 (require 'erasmo-performance)
 (require 'erasmo-defaults)
 (require 'erasmo-keybind)
 (require 'erasmo-completion)
-;; order agnostic
 (require 'erasmo-ux)
 (require 'erasmo-ui)
 (require 'erasmo-ide)
@@ -38,5 +36,6 @@
 (require 'erasmo-books)
 (require 'erasmo-data)
 (require 'erasmo-shell)
-(require 'erasmo-org)
+(require 'erasmo-org)                   ;must come before notes
+;; (require 'erasmo-notes)
 (require 'erasmo-web)

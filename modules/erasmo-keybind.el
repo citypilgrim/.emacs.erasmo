@@ -65,17 +65,17 @@
 
 ;; setting shortcut for C-x C-s
 (global-set-key (kbd "C-S-a") (lambda ()
-				(interactive)
-				(save-buffer)))
+                                (interactive)
+                                (save-buffer)))
 (global-set-key (kbd "C-S-c") (lambda ()
-				(interactive)
-				(whitespace-cleanup)
-				(save-buffer)))
+                                (interactive)
+                                (whitespace-cleanup)
+                                (save-buffer)))
 
 ;; Switching windows backwards
 (global-set-key (kbd "C-x O") (lambda ()
-				(interactive)
-				(other-window -1)))
+                                (interactive)
+                                (other-window -1)))
 ;; buffer viewing
 (erasmo-keybind-leader-key-def
  "tt" 'toggle-truncate-lines
@@ -91,6 +91,7 @@
   "fb" '((lambda () (interactive) (find-file "~/handbook/biblio.bib")) :which-key "biblio")
   "fc" '((lambda () (interactive) (consult-find "~/.emacs.d" "erasmo-")) :which-key "config")
   "fC" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "config")
+  "fe" '((lambda () (interactive) (find-file "~/.dotfiles/.env/emacs/erasmo-env.el")) :which-key "config")
   "fg" '((lambda () (interactive) (find-file "~/.dotfiles/erasmo/systems/base.scm")) :which-key "guix")
   "fs" '((lambda () (interactive) (find-file "~/handbook/slipbox.org")) :which-key "slipbox")
 

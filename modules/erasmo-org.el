@@ -114,6 +114,10 @@
 
 (add-hook 'after-init-hook #'erasmo-org-set-org-agenda-files)
 
+;; refiling
+(setq org-refile-targets '((nil :maxlevel . 1)
+                           (org-agenda-files :maxlevel . 1)))
+
 ;; seek out other tasks with org-agenda
 ;; org-agenda-custom-command-template determins the agenda view
 (defvar erasmo-org--agenda-custom-command-template
