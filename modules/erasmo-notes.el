@@ -5,6 +5,7 @@
   :after org
   :init
   (setq org-roam-v2-ack t)
+  (setq emacsql-sqlite-executable (locate-file "emacsql-sqlite" exec-path))
   ;; defining variables here so that org-agenda and org-capture can initialise
   (defvar org-roam-directory erasmo-env-org-roam-directory)
   (defvar org-roam-dailies-directory erasmo-env-org-roam-dailies-directory)

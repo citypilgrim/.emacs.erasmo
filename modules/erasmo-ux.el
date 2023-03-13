@@ -123,8 +123,8 @@
 ;; mini pop up buffers with popper
 (use-package popper
   :bind (("C-M-`" . popper-toggle-latest)
-         ("M-`" . popper-cycle)
-         ("C-M-\"" . popper-toggle-type))
+         ("M-`" . popper-cycle)           ;close popup
+         ("C-M-\"" . popper-toggle-type)) ;change popup to proper buffer
   :init
   (popper-mode)
   :custom

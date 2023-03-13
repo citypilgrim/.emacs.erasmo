@@ -37,5 +37,5 @@
 (require 'erasmo-data)
 (require 'erasmo-shell)
 (require 'erasmo-org)                   ;must come before notes
-;; (require 'erasmo-notes)
+(require 'erasmo-notes)
 (require 'erasmo-web)
