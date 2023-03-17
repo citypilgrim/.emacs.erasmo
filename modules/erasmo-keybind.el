@@ -88,20 +88,20 @@
 ;; file browsing
 (erasmo-keybind-leader-key-def
   ;; quick access
-  "fb" '((lambda () (interactive) (find-file "~/handbook/biblio.bib")) :which-key "biblio")
+  "fb" '((lambda () (interactive) (find-file erasmo-env-biblio)) :which-key "biblio")
   "fc" '((lambda () (interactive) (consult-find "~/.emacs.d" "erasmo-")) :which-key "config")
   "fC" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "config")
   "fe" '((lambda () (interactive) (find-file "~/.dotfiles/.env/emacs/erasmo-env.el")) :which-key "config")
   "fg" '((lambda () (interactive) (find-file "~/.dotfiles/erasmo/systems/base.scm")) :which-key "guix")
-  "fs" '((lambda () (interactive) (find-file "~/handbook/slipbox.org")) :which-key "slipbox")
+  "fs" '((lambda () (interactive) (find-file erasmo-env-slipbox)) :which-key "slipbox")
 
   ;; notes
-  "na" '((lambda () (interactive) (counsel-file-jump "" "~/handbook/agenda")) :which-key "agenda")
-  "no" '((lambda () (interactive) (counsel-file-jump "" "~/handbook/org")) :which-key "org")
+  "na" '((lambda () (interactive) (consult-find erasmo-env-agenda-directory)) :which-key "agenda")
+  "no" '((lambda () (interactive) (consult-find erasmo-env-org-directory)) :which-key "org")
   "ns" '(:ignore t :which-key "search files")
-  "nsa" '((lambda () (interactive) (erasmo-keybind--search-files "~/handbook/agenda")) :which-key "agenda")
-  "nso" '((lambda () (interactive) (erasmo-keybind--search-files "~/handbook/org")) :which-key "org")
-  "nsf" '((lambda () (interactive) (erasmo-keybind--search-files "~/handbook/roam")) :which-key "roam")
-  "nsd" '((lambda () (interactive) (erasmo-keybind--search-files "~/handbook/journal")) :which-key "dailies"))
+  "nsa" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-agenda-directory)) :which-key "agenda")
+  "nso" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-directory)) :which-key "org")
+  "nsf" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-roam-directory)) :which-key "roam")
+  "nsd" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-roam-dailies-directory)) :which-key "dailies"))
 
 (provide 'erasmo-keybind)

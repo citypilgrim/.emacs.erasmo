@@ -5,6 +5,9 @@
   :defer nil
   :hook (org-mode . erasmo-org-mode-setup)
   :custom
+  (org-return-follows-link t)
+  (org-mouse-1-follows-link t)
+  (org-link-descriptive t)
   (org-ellipsis " ▾")
   (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
@@ -69,6 +72,10 @@
 ;; modern display
 (use-package org-modern)
 (global-org-modern-mode)
+
+;; toggle hidden elements
+(use-package org-appear
+  :hook (org-mode . org-appear-mode))
 
 ;; narrowing the view
 (use-package visual-fill-column

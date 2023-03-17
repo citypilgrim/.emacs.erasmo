@@ -152,4 +152,8 @@
   :bind
   ("C-h p" . helpful-at-point))
 
+;; project management
+(use-package project
+  :bind ("C-x p g" . consult-ripgrep))
+
 (provide 'erasmo-ux)

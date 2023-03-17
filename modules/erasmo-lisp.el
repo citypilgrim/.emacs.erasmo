@@ -3,7 +3,8 @@
 ;; tree editing
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
-         (lisp-mode . lispy-mode)))
+         (lisp-mode . lispy-mode)
+         (scheme-mode . lispy-mode)))
 
 (use-package geiser
   :custom
