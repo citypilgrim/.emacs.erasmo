@@ -51,24 +51,29 @@
     (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
     (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground nil :inherit 'mode-line)))
 
-(setq tab-bar-close-button-show nil
-      tab-bar-format '(tab-bar-format-history
-                       tab-bar-format-tabs-groups
-                       tab-bar-separator
-                       erasmo-ui--tmr-mode-line
-                       tab-bar-separator
-                       tab-bar-format-align-right
-                       tab-bar-format-global))
+;; (setq tab-bar-close-button-show nil
+;;       tab-bar-format '(tab-bar-format-history
+;;                        tab-bar-format-tabs-groups
+;;                        tab-bar-separator
+;;                        erasmo-ui--tmr-mode-line
+;;                        tab-bar-separator
+;;                        tab-bar-format-align-right
+;;                        tab-bar-format-global))
+
+(setq tab-line-format
+      '((:eval (format-time-string "%H:%M"))
+        (tab-bar-format-align-right))
+      tab-line-close-button-show nil)
 
 (with-eval-after-load 'doom-modeline
   (erasmo-ux--set-tab-bar-faces)
 
-  (add-to-list 'global-mode-string '(" " display-time-string))
-  (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
-  (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
+  ;; (add-to-list 'global-mode-string '(" " display-time-string))
+  ;; (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
+  ;; (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
 
-  (display-time-mode 1)
-  (display-battery-mode 1)
+  ;; (display-time-mode 1)
+  ;; (display-battery-mode 1)
 
   (setq tab-bar-show t)
   (tab-bar-mode 1)
