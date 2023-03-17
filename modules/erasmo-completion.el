@@ -82,6 +82,19 @@
    '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :init (marginalia-mode 1))
 
+;; more completion suggestions with Yasnippet
+(use-package yasnippet
+  :hook ((prog-mode . yas-minor-mode)
+         (eshell-mode . yas-minor-mode))
+  :config
+  (yas-reload-all))
+
+(use-package yasnippet-snippets
+  :after yasnippet
+  :custom
+  (yas-snippet-dirs `(,(concat user-emacs-directory "snippets")
+                      yasnippet-snippets-dir)))
+
 ;; provides practical commands
 (use-package consult
   :bind (("C-s" . consult-line)

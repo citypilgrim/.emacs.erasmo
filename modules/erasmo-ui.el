@@ -142,7 +142,9 @@
   (doom-modeline-minor-modes t)
   (doom-modeline-persp-name nil)
   (doom-modeline-buffer-file-name-style 'truncate-except-project)
-  (doom-modeline-major-mode-icon t))
+  (doom-modeline-major-mode-icon t)
+  (doom-modeline-time t)
+  (doom-modeline-status t))
 
 (defun erasmo-ui--start-doom-modeline ()
   (require 'doom-modeline)

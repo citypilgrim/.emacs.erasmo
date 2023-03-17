@@ -95,7 +95,81 @@ manually with something like this:
 
 ;; language server support, lsp for java
 ;; TODO incoporate lsp mode
+(defun erasmo-ide--lsp-mode-setup ()
+  (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
+  (lsp-headerline-breadcrumb-mode)
+  (diminish 'lsp-lens-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'eldoc-mode))
 
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . erasmo-ide--lsp-mode-setup)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t)
+  (global-set-key (kbd "C-M-;") 'lsp-workspace-folders-open))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+;; workspace managemet
+;; Try these commands with =M-x=:
+;; - ~lsp-treemacs-symbols~ - Show a tree view of the symbols in the current file
+;; - ~lsp-treemacs-references~ - Show a tree view for the references of the symbol under the cursor
+;; - ~lsp-treemacs-error-list~ - Show a tree view for the diagnostic messages in the project
+
+(use-package lsp-treemacs
+  :after lsp-mode
+  :config
+  (erasmo-keybind-leader-key-def :prefix lsp-keymap-prefix
+    "t" '(:ignore t :which-key "treemacs")
+    "te" '(lsp-treemacs-error-list :which-key "errors")
+    "tr" '(lsp-treemacs-references :which-key "refs")
+    "ts" '(lsp-treemacs-symbols :which-key "symbols")
+    "tw" '(treemacs :which-key "workspace"))
+  (global-set-key (kbd "C-M-'") 'treemacs-switch-workspace)
+  :custom
+  (lsp-treemacs-sync-mode t))
+
+(use-package lsp-java
+  :hook (java-mode . indent-tabs-mode)
+  :init
+  (add-hook 'java-mode-hook #'lsp)
+
+  (add-hook 'java-mode-hook (lambda () (setq-local c-basic-offset tab-width)))
+  :config
+  (require 'dap-java)
+  :custom
+  (lsp-enable-file-watchers nil)
+  (lsp-java-autobuild-enabled t)
+  (lsp-java-completion-max-results 50)
+  (lsp-java-vmargs '("-XX:+UseParallelGC"
+                     "-XX:GCTimeRatio=4"
+                     "-XX:AdaptiveSizePolicyWeight=90"
+                     "-Dsun.zip.disableMemoryMapping=true"
+                     "-Xmx2G"
+                     "-Xms100m"))
+  (lsp-java-format-settings-url (lsp--path-to-uri (expand-file-name "resource/jdtls/eclipse-java-export.xml" user-emacs-directory)))
+  (lsp-java-format-settings-profile "Eclipse [built-in] tabs 8")
+  ;; (lsp-java-server-install-dir "/opt/jdtls/test")
+
+  ;; settings for gradle
+  (lsp-java-import-gradle-home (getenv "GRADLE_HOME"))
+  (lsp-java-import-gradle-java-home (getenv "JAVA_HOME"))
+  (lsp-java-import-gradle-user-home "~/.gradle")
+  (lsp-java-import-gradle-enabled t)
+  (lsp-java-import-gradle-version "7.4.2")
+  ;; lsp-java-import-gradle-arguments
+  ;; lsp-java-import-gradle-jvm-arguments
+  ;; lsp-java-import-gradle-offline-enabled
+  ;; lsp-java-import-gradle-wrapper-enabled
+  )
 
 
 
