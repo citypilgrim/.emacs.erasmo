@@ -64,7 +64,7 @@
   (doom-themes-visual-bell-config)
   )
 
-(use-package darktooth-theme :defer t)
+(use-package darktooth-theme)
 
 (use-package ample-theme
   :init (progn (load-theme 'ample t t)

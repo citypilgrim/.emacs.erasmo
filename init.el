@@ -39,3 +39,4 @@
 (require 'erasmo-org)                   ;must come before notes
 (require 'erasmo-notes)
 (require 'erasmo-web)
+(require 'erasmo-ai)
