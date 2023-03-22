@@ -1,5 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
+;; tweaking abbrev
+;; abbrev is used for shorthand typing
+(use-package emacs
+  :hook (abbrev-mode . (lambda () (diminish 'abbrev-mode))))
+
 ;; inline completion ui
 (use-package corfu
   :init
@@ -11,10 +16,10 @@
 	      ("M-n" . corfu-popupinfo-scroll-up)
 	      ("M-d" . corfu-popupinfo-toggle))
   :custom
-  (corfu-cycle t)		 ; Allows cycling through candidates
-  (corfu-auto t)		 ; Enable auto completion
-  (corfu-auto-prefix 2)		 ; Complete with less prefix keys
-  (corfu-auto-delay 0.0)	 ; No delay for completion
+  (corfu-cycle t)                 ; Allows cycling through candidates
+  (corfu-auto t)                  ; Enable auto completion
+  (corfu-auto-prefix 2)           ; Complete with less prefix keys
+  (corfu-auto-delay 0.0)          ; No delay for completion
   (corfu-echo-documentation 0.25) ; Echo docs for current completion option
   )
 
@@ -85,7 +90,8 @@
 ;; more completion suggestions with Yasnippet
 (use-package yasnippet
   :hook ((prog-mode . yas-minor-mode)
-         (eshell-mode . yas-minor-mode))
+         (eshell-mode . yas-minor-mode)
+         (yas-minor-mode . (lambda () (diminish 'yas-minor-mode))))
   :config
   (yas-reload-all))
 

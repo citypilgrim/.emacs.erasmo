@@ -43,9 +43,15 @@
 (use-package all-the-icons
   :custom
   (all-the-icons-scale-factor 1))
+
 (use-package all-the-icons-dired
   :init
-  (all-the-icons-dired-mode))
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (interactive)
+              (unless (s-equals? "/gnu/store/" (expand-file-name default-directory))
+                (all-the-icons-dired-mode 1)
+                (diminish 'all-the-icons-dired-mode)))))
 
 ;; for completion buffers
 (use-package all-the-icons-completion

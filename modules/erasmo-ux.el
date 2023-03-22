@@ -39,18 +39,16 @@
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
   :custom
-  (tabspaces-use-filtered-buffers-as-default t)
+  (tabspaces-use-filtered-buffers-as-default nil)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
+  ;; (tabspaces-include-buffers '("*scratch*" "*Messages*")) ;this doesnt help
   ;; sessions
-  ;; (tabspaces-session t)
-  ;; (tabspaces-session-auto-restore t)
+  (tabspaces-session t)
+  (tabspaces-session-auto-restore nil)
   )
 (tabspaces-mode)
 
-
-;; TODO configure consult to be local to the tab bar
 (with-eval-after-load 'consult
   ;; Hide full buffer list by default (still available with "b" prefix)
   (consult-customize consult--source-buffer :hidden t :default nil)
@@ -80,6 +78,24 @@
 
 (global-set-key (kbd "C-M-p") #'tab-bar-switch-to-prev-tab)
 (global-set-key (kbd "C-M-n") #'tab-bar-switch-to-next-tab)
+
+;; tweaking dired
+(use-package emacs
+  :bind (:map dired-mode-map
+              ("M-<return>" . #'dired-up-directory))
+  :config
+  (setq dired-listing-switches "-agho --group-directories-first"
+        dired-omit-verbose nil)
+
+  :init
+  (add-hook 'dired-mode-hook
+            (lambda ()
+              (interactive)
+              (dired-omit-mode 0)
+              (hl-line-mode 1)
+              (dired-async-mode)
+              (diminish 'dired-async-mode)
+              (toggle-truncate-lines 1))))
 
 ;; mini pop up buffers with popper
 (use-package popper

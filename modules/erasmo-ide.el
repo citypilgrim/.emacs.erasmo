@@ -3,6 +3,13 @@
 ;; columne numbering in modeline
 (column-number-mode)
 
+;; tweaking eldoc
+;; eldoc shows you in the mini buffer the argument list
+;; of a function call you are writing.
+;; it supports elisp and a few other languages
+(use-package eldoc
+  :hook (eldoc-mode . (lambda () (diminish 'eldoc-mode))))
+
 ;; Enable line numbers for some modes
 (dolist (mode '(text-mode-hook
                 prog-mode-hook
@@ -20,7 +27,8 @@
 (use-package flycheck
   :ensure t
   :init
-  (global-flycheck-mode))
+  (global-flycheck-mode)
+  (diminish 'flycheck-mode))
 
 ;; lanugage specific settings
 (add-hook 'python-mode-hook
@@ -97,16 +105,12 @@ manually with something like this:
 ;; TODO incoporate lsp mode
 (defun erasmo-ide--lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode)
-  (diminish 'lsp-lens-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'flycheck-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'eldoc-mode))
+  (lsp-headerline-breadcrumb-mode))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook (lsp-mode . erasmo-ide--lsp-mode-setup)
+  :hook ((lsp-mode . erasmo-ide--lsp-mode-setup)
+         (lsp-lens-mode . (lambda () (diminish 'lsp-lens-mode))))
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
@@ -170,7 +174,5 @@ manually with something like this:
   ;; lsp-java-import-gradle-offline-enabled
   ;; lsp-java-import-gradle-wrapper-enabled
   )
-
-
 
 (provide 'erasmo-ide)
