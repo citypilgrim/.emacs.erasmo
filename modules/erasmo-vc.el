@@ -106,4 +106,8 @@
   (set-face-foreground 'git-gutter:modified "LightGoldenrod")
   (set-face-foreground 'git-gutter:deleted "LightCoral"))
 
+
+;; package management with guix
+(use-package guix)
+
 (provide 'erasmo-vc)

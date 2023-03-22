@@ -3,7 +3,7 @@
 ;; core config
 (use-package org
   :defer nil
-  :hook (org-mode . erasmo-org-mode-setup)
+  :hook (org-mode . erasmo-org--mode-setup)
   :custom
   (org-return-follows-link t)
   (org-mouse-1-follows-link t)
@@ -34,14 +34,16 @@
   (let ((org-confirm-babel-evaluate nil))
     (org-babel-tangle)))
 
-(defun erasmo-org-mode-setup ()
+(defun erasmo-org--mode-setup ()
   ;; turn on indentation and auto-fill mode for org files
   (org-indent-mode)
   (diminish 'org-indent-mode)
   (variable-pitch-mode 1)
   (auto-fill-mode 0)
   (visual-line-mode 1)
-  (diminish 'visual-line-mode))
+  (diminish 'visual-line-mode)
+  (flyspell-mode 1)
+  (diminish 'flyspell-mode))
 
 (defun erasmo-org--setup-org-faces ()
   ;; Set faces for heading levels

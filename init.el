@@ -40,3 +40,4 @@
 (require 'erasmo-notes)
 (require 'erasmo-web)
 (require 'erasmo-ai)
+(require 'erasmo-latex)

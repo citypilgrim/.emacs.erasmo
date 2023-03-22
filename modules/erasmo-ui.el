@@ -90,7 +90,7 @@
   (erasmo-ui--init-theme theme)
   (if (string-equal major-mode "org-mode")
       (progn
-        (erasmo-org-mode-setup)
+        (erasmo-org--mode-setup)
         (erasmo-org-set-org-agenda-files)))
   (erasmo-ui--set-tab-bar-faces))
 
