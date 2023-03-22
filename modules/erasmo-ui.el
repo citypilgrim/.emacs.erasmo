@@ -55,6 +55,8 @@
 
 ;; Themes
 ;; A nice gallery of Emacs themes can be found at https://emacsthemes.com/.
+;; Themes used have to be acceptive of the font faces defined in
+;; erasmo-ui--set-tab-bar-faces
 
 (use-package spacegray-theme :defer t)
 
@@ -64,8 +66,6 @@
   (doom-themes-visual-bell-config)
   )
 
-(use-package darktooth-theme)
-
 (use-package ample-theme
   :init (progn (load-theme 'ample t t)
                (load-theme 'ample-flat t t)
@@ -74,16 +74,19 @@
 
 (use-package autumn-light-theme :defer t)
 
-(defun erasmo-ui--load-theme (theme)
+(defun erasmo-ui--init-theme (theme)
   "Enhance `load-theme' by first disabling enabled themes."
   (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t)
+  (load-theme theme t))
+
+(defun erasmo-ui--load-theme (theme)
+  "Configures required settings after theme is loaded."
+  (erasmo-ui--init-theme theme)
   (if (string-equal major-mode "org-mode")
       (progn
         (erasmo-org-mode-setup)
         (erasmo-org-set-org-agenda-files)))
-  )
-(erasmo-ui--load-theme 'doom-zenburn)
+  (erasmo-ui--set-tab-bar-faces))
 
 ;; theme toggle
 (defhydra erasmo-ui-hydra-theme-switcher (:hint nil)
@@ -92,29 +95,26 @@
     ----------------------------------------------
     _1_ zenburn          _w_ flatwhite
     _2_ ample            _e_ autumn
-    _3_ darktooth       ^
-    _4_ snazzy           ^
-    _5_ old-hope         ^
-    _6_ henna                ^
-    _7_ palenight            ^
-    _8_ peacock              ^
+    _3_ snazzy           ^
+    _4_ old-hope         ^
+    _5_ henna                ^
+    _6_ palenight            ^
+    _7_ peacock              ^
     _q_ quit                 ^
     ^                        ^
     "
   ;; Dark
   ("1" (erasmo-ui--load-theme 'doom-zenburn) "zenburn")
   ("2" (erasmo-ui--load-theme 'ample-flat) "ample")
-  ("3" (erasmo-ui--load-theme 'darktooth-dark) "darktooth")
-  ("4" (erasmo-ui--load-theme 'doom-snazzy) "snazzy")
-  ("5" (erasmo-ui--load-theme 'doom-old-hope) "old-hope")
-  ("6" (erasmo-ui--load-theme 'doom-henna) "henna")
-  ("7" (erasmo-ui--load-theme 'doom-palenight) "doom-palenight")
-  ("8" (erasmo-ui--load-theme 'doom-peacock) "peacock")
+  ("3" (erasmo-ui--load-theme 'doom-snazzy) "snazzy")
+  ("4" (erasmo-ui--load-theme 'doom-old-hope) "old-hope")
+  ("5" (erasmo-ui--load-theme 'doom-henna) "henna")
+  ("6" (erasmo-ui--load-theme 'doom-palenight) "doom-palenight")
+  ("7" (erasmo-ui--load-theme 'doom-peacock) "peacock")
 
   ;; Light
   ("w" (erasmo-ui--load-theme 'doom-flatwhite) "flatwhite")
   ("e" (erasmo-ui--load-theme 'autumn-light) "autumn")
-  ("r" (erasmo-ui--load-theme 'marquardt) "marquardt")
 
   ("q" nil))
 
@@ -156,7 +156,34 @@
     '(objed-state grip debug repl lsp minor-modes input-method indent-info buffer-encoding major-mode process vcs checker))
   (doom-modeline-set-modeline 'default t))
 
+;; configuring tab bar
+(defun erasmo-ui--init-tab-bar ()
+  "Initialises tab bar to act as machine status"
+  (setq tab-bar-close-button-show nil
+        tab-bar-format '(tab-bar-format-history
+                         tab-bar-format-tabs-groups
+                         tab-bar-separator
+                         tab-bar-format-align-right
+                         tab-bar-format-global))
+  (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
+  (add-to-list 'global-mode-string '(" " display-time-string))
+  (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
+  (display-time-mode 1)
+  (display-battery-mode 1)
+  (setq tab-bar-show t)
+  (tab-bar-mode 1)
+  (tab-bar-rename-tab (getenv "USER")))
+
+(defun erasmo-ui--set-tab-bar-faces ()
+  (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
+    (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
+    (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground nil :inherit 'mode-line)))
+
+;; loading major ui changes
+(erasmo-ui--init-theme 'doom-zenburn)
 (add-hook 'after-init-hook #'erasmo-ui--start-doom-modeline)
+(eval-after-load 'doom-modeline (progn (erasmo-ui--init-tab-bar)
+                                       (erasmo-ui--set-tab-bar-faces)))
 
 ;; rainbow dired
 (use-package dired-rainbow

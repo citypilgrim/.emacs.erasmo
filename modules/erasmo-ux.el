@@ -33,47 +33,8 @@
       scroll-step 1                                ;keyboard scroll one line
       )
 
-;; timer
-(use-package tmr)
-
-(defun erasmo-ui--tmr-mode-line ()
-  (if (not (and (boundp 'tmr--timers)
-                tmr--timers))
-      ""
-    (propertize (format "timer %s: %s"
-                        (tmr--format-remaining (car tmr--timers))
-                        (tmr--timer-description (car tmr--timers)))
-                'tab-bar '(:foreground "orange"))))
 
 ;; tab bar workspaces
-(defun erasmo-ux--set-tab-bar-faces ()
-  (let ((color (face-attribute 'doom-modeline-bar :background nil t)))
-    (set-face-attribute 'tab-bar-tab nil :foreground nil :background nil :weight 'semi-bold :underline `(:color ,color) :inherit nil)
-    (set-face-attribute 'tab-bar nil :font "Iosevka Aile" :foreground nil :inherit 'mode-line)))
-
-(setq tab-bar-close-button-show nil
-      tab-bar-format '(tab-bar-format-history
-                       tab-bar-format-tabs-groups
-                       tab-bar-separator
-                       erasmo-ui--tmr-mode-line
-                       tab-bar-separator
-                       tab-bar-format-align-right
-                       tab-bar-format-global))
-
-(with-eval-after-load 'doom-modeline
-  (erasmo-ux--set-tab-bar-faces)
-
-  (add-to-list 'global-mode-string '(" " display-time-string))
-  (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
-  (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
-
-  (display-time-mode 1)
-  (display-battery-mode 1)
-
-  (setq tab-bar-show t)
-  (tab-bar-mode 1)
-  (tab-bar-rename-tab (getenv "USER")))
-
 (use-package tabspaces
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
@@ -87,7 +48,7 @@
   ;; (tabspaces-session-auto-restore t)
   )
 (tabspaces-mode)
-  
+
 
 ;; TODO configure consult to be local to the tab bar
 (with-eval-after-load 'consult
