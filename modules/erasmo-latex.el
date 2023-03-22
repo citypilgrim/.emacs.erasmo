@@ -7,6 +7,8 @@
   (plist-put org-format-latex-options :scale 2) ;show larger preview
   )
 
+(require 'tex-mode)                     ;for latex-mode-map
+
 (use-package cdlatex
   :hook ((LaTeX-mode . cdlatex-mode)
          (cdlatex-mode . (lambda () (diminish 'cdlatex-mode))))
