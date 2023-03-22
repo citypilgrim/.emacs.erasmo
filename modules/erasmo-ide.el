@@ -105,7 +105,11 @@ manually with something like this:
 ;; TODO incoporate lsp mode
 (defun erasmo-ide--lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
-  (lsp-headerline-breadcrumb-mode))
+  (lsp-headerline-breadcrumb-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'company-mode)
+  (diminish 'company-capf)
+  (corfu-mode -1))
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
@@ -145,8 +149,8 @@ manually with something like this:
   :hook (java-mode . indent-tabs-mode)
   :init
   (add-hook 'java-mode-hook #'lsp)
-
   (add-hook 'java-mode-hook (lambda () (setq-local c-basic-offset tab-width)))
+  (remove-hook 'java-mode-hook #'eglot-ensure)
   :config
   (require 'dap-java)
   :custom
