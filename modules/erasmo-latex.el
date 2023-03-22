@@ -16,11 +16,12 @@
               ("<tab>" . cdlatex-tab)))
 
 ;; convenience func to get into the mathematical latex feels
+;; utilise org-latex-preview to inline render latex formulas
 (defun erasmo-latex-setup ()
   (interactive)
   (org-cdlatex-mode)
-  (org-toggle-pretty-entities)
-  (org-latex-preview))
+  (diminish 'org-cdlatex-mode)
+  (org-toggle-pretty-entities))
 
 
 ;; vanilla latex mode
