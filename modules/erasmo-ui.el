@@ -163,6 +163,17 @@
   (doom-modeline-set-modeline 'default t))
 
 ;; configuring tab bar
+
+(defvar erasmo-ui--tab-bar-mode-string
+  '((" " tracking-mode-line-buffers)
+    (" " display-time-string)
+    (" " doom-modeline--battery-status)))
+
+(defun erasmo-ui--tab-bar-format-global ()
+  "A rendition of tab-bar-format-global that uses
+erasmo-ui--tab-bar-mode-string instead."
+  `((global menu-item ,(string-trim-right (format-mode-line erasmo-ui--tab-bar-mode-string)) ignore)))
+
 (defun erasmo-ui--init-tab-bar ()
   "Initialises tab bar to act as machine status"
   (setq tab-bar-close-button-show nil
@@ -170,10 +181,7 @@
                          tab-bar-format-tabs-groups
                          tab-bar-separator
                          tab-bar-format-align-right
-                         tab-bar-format-global))
-  (add-to-list 'global-mode-string '(" " doom-modeline--battery-status))
-  (add-to-list 'global-mode-string '(" " display-time-string))
-  (add-to-list 'global-mode-string '(" " tracking-mode-line-buffers))
+                         erasmo-ui--tab-bar-format-global))
   (display-time-mode 1)
   (display-battery-mode 1)
   (setq tab-bar-show t)
