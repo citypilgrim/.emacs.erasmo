@@ -8,19 +8,20 @@
    #'magit-display-buffer-same-window-except-diff-v1)
   :init
   (erasmo-keybind-leader-key-def
-    "gs"  'magit-status
-    "gd"  'magit-diff-unstaged
-    "gc"  'magit-branch-or-checkout
-    "gl"   '(:ignore t :which-key "log")
+    "gs" 'magit-status
+    "gd" 'magit-diff-unstaged
+    "gc" 'magit-branch-or-checkout
+    "gl" '(:ignore t :which-key "log")
     "glc" 'magit-log-current
     "glf" 'magit-log-buffer-file
-    "gb"  'magit-branch
-    "gP"  'magit-push-current
-    "gp"  'magit-pull-branch
-    "gf"  'magit-fetch
-    "gF"  'magit-fetch-all
-    "gr"  'magit-rebase)
-  )
+    "gb" 'magit-branch
+    "gP" 'magit-push-current
+    "gp" 'magit-pull-branch
+    "gf" 'magit-fetch
+    "gF" 'magit-fetch-all
+    "gr" 'magit-rebase)
+  (add-to-list 'transient-levels '((magit-commit
+                                    (magit:--gpg-sign . 1)))))
 
 ;; code review with forge
 ;; Most of the forge commands can be retrieved from it's transient buffer. To edit currently visited issue with easy through key bindings, we utilise the the following key maps:
