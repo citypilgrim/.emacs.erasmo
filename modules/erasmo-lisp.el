@@ -3,6 +3,7 @@
 ;; tree editing
 (use-package lispy
   :hook ((emacs-lisp-mode . lispy-mode)
+         (lisp-data-mode . lispy-mode)
          (lisp-mode . lispy-mode)
          (scheme-mode . lispy-mode)
          (lispy-mode . (lambda () (diminish 'lispy-mode)))))
@@ -16,8 +17,6 @@
   )
 
 (use-package geiser-guile)
-
-;; TODO assign directories to where guix is installed by guix home
 
 ;; Assuming the Guix checkout is in ~/src/guix.
 ;; Yasnippet configuration
