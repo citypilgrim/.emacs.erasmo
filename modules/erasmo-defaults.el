@@ -42,4 +42,9 @@
 (setq-default bidi-inhibit-bpa t)
 (global-so-long-mode 1)
 
+;; entering gpg password via emacs
+(use-package pinentry
+  :init (setq epg-pinentry-mode 'loopback)
+  :config (pinentry-start))
+
 (provide 'erasmo-defaults)
