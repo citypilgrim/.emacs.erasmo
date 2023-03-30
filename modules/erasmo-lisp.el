@@ -16,9 +16,17 @@
   (geiser-implementations-alist '(((regexp "\\.scm$") guile)))
   )
 
-(use-package geiser-guile)
+(use-package geiser-guile
+  :custom
+  (geiser-guile-load-path '("/root/.config/guix/current/lib/guile/3.0/site-ccache"
+                            "/root/.config/guix/current/share/guile/site/3.0"
+                            "/root/.guix-home/profile/share/guile/site/3.0")))
 
-;; Assuming the Guix checkout is in ~/src/guix.
+
+;; TODO  source for the snippets for yas and tempel
+;; the files exist in /gnu/store, but are not linked
+;; to XDG_CONFIG_HOME
+
 ;; Yasnippet configuration
 (with-eval-after-load 'yasnippet
   (add-to-list 'yas-snippet-dirs "~/src/guix/etc/snippets/yas"))
