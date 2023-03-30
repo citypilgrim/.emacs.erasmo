@@ -68,7 +68,7 @@
 (use-package eglot
   :custom
   (eglot-autoshutdown t)
-  :init
+  :config
   (add-to-list 'eglot-server-programs '(python-mode . ("python-lsp-server"))
                ;; installed via npm
                (add-to-list 'eglot-server-programs '(js-mmode . ("typescript-language-server --stdio")))))

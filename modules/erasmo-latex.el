@@ -27,7 +27,7 @@
 
 
 ;; vanilla latex mode
-(use-package auctex)
+;; (use-package auctex)
 
 ;; In ~latex-mode~, you can use the following key bindings:
 ;; - ~C-c {~ ; insert environment
