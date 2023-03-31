@@ -10,7 +10,7 @@
   (defvar org-roam-directory erasmo-env-org-roam-directory)
   (defvar org-roam-dailies-directory erasmo-env-org-roam-dailies-directory)
   :custom
-  (org-roam-completion-everywhere t)
+  (org-roam-completion-everywhere nil)
   :bind (
          ("C-c n b" . erasmo-notes-find-node-in-small-buffer-vertically)
          ("C-c n B" . erasmo-notes-find-node-in-small-buffer-horizontally)
