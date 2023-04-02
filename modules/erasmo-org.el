@@ -27,7 +27,9 @@
                                                 #'erasmo-org--babel-tangle-dont-ask
                                                 'run-at-end 'only-in-org-mode)))
   ;; org-agenda
-  (add-hook 'org-agenda-after-show-hook #'org-mode))
+  (add-hook 'org-agenda-after-show-hook #'org-mode)
+  :config
+  (add-to-list 'org-babel-load-languages '(shell . t)))
 
 (defun erasmo-org--babel-tangle-dont-ask ()
   ;; Dynamic scoping to the rescue
