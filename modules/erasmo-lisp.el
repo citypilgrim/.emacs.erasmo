@@ -17,11 +17,9 @@
   )
 
 (use-package geiser-guile
-  :custom
+  ;; :custom
   (geiser-guile-load-path '("/root/.config/guix/current/lib/guile/3.0/site-ccache"
-                            "/root/.config/guix/current/share/guile/site/3.0"
-                            "/root/.guix-home/profile/share/guile/site/3.0")))
-
+                            "/root/.config/guix/current/share/guile/site/3.0")))
 
 ;; TODO  source for the snippets for yas and tempel
 ;; the files exist in /gnu/store, but are not linked
