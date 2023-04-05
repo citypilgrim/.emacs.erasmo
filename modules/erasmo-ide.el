@@ -25,7 +25,6 @@
 
 ;; linting
 (use-package flycheck
-  :ensure t
   :init
   (global-flycheck-mode)
   (diminish 'flycheck-mode))

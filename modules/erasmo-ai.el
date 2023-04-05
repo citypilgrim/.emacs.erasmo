@@ -12,7 +12,6 @@
                      "site-packages/whisper.el"))
 (require 'whisper)
 (use-package whisper
-  :ensure nil
   :bind ("<f5>" . whisper-run)
   :config
   (setq whisper-install-directory "/tmp/"
