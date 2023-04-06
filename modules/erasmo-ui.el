@@ -42,7 +42,7 @@
                       :font "Iosevka Aile"
                       :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor))))
 
-(erasmo-ui-set-font)
+(add-hook 'after-init-hook #'erasmo-ui-set-font)
 
 ;; pretty icons
 (use-package all-the-icons

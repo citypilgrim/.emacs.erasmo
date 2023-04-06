@@ -17,7 +17,7 @@
   )
 
 (use-package geiser-guile
-  ;; :custom
+  :custom
   (geiser-guile-load-path '("/root/.config/guix/current/lib/guile/3.0/site-ccache"
                             "/root/.config/guix/current/share/guile/site/3.0")))
 
