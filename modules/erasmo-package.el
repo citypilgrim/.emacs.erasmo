@@ -15,5 +15,6 @@
 
 ;; use-package for package declaration
 (require 'use-package)
+(setq use-package-always-ensure t)
 
 (provide 'erasmo-package)

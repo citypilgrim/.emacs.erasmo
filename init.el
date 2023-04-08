@@ -19,7 +19,7 @@
              (concat user-emacs-directory "modules"))
 
 ;; Add environment variables to load path
-(add-to-list 'load-path "~/.dotfiles/.env/emacs")
+(add-to-list 'load-path "~/.env/emacs")
 
 ;; Load pertinent modules
 (require 'erasmo-env)
