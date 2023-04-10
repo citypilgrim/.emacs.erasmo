@@ -29,6 +29,7 @@
   ;; org-agenda
   (add-hook 'org-agenda-after-show-hook #'org-mode)
   :config
+  (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
   (add-to-list 'org-babel-load-languages '(shell . t)))
 
 (defun erasmo-org--babel-tangle-dont-ask ()

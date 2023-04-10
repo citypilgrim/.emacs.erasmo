@@ -65,12 +65,14 @@
 
 ;; language server support
 (use-package eglot
+  :hook
+  (eglot-managed-mode . electric-pair-mode)
   :custom
   (eglot-autoshutdown t)
   :config
   (add-to-list 'eglot-server-programs '(python-mode . ("python-lsp-server"))
                ;; installed via npm
-               (add-to-list 'eglot-server-programs '(js-mmode . ("typescript-language-server --stdio")))))
+               (add-to-list 'eglot-server-programs '(js-mode . ("typescript-language-server --stdio")))))
 
 (defun erasmo-ide--add-eglot-hooks (mode-list)
   "Iterates over MODE-LIST recursively to add eglot-ensure to
