@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;; IRC----------
+
 (require 'erc)
 
 ;; Load authentication info from an external source.  Put sensitive
@@ -53,4 +55,6 @@
   ;; disable logging
 (customize-set-variable 'erc-log-channels-directory nil)
 
-(provide 'erasmo-irc)
+;; telegram----------
+
+(provide 'erasmo-msg)

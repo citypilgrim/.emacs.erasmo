@@ -41,4 +41,4 @@
 (require 'erasmo-web)
 (require 'erasmo-ai)
 (require 'erasmo-latex)
-(require 'erasmo-irc)
+(require 'erasmo-msg)

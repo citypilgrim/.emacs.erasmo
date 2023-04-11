@@ -21,4 +21,8 @@
         whisper-translate nil
         whisper--ffmpeg-input-device "RDPSource"))
 
+(use-package gptel
+  :custom
+  (gptel-api-key erasmo-env-openai-token))
+
 (provide 'erasmo-ai)
