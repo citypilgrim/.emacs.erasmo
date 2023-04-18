@@ -95,6 +95,9 @@
   "fg" '((lambda () (interactive) (find-file "~/src/erasmo/examples/src/citypilgrim/packages.scm")) :which-key "guix")
   "fs" '((lambda () (interactive) (find-file erasmo-env-slipbox)) :which-key "slipbox")
 
+  "fl" '(:ignore t :which-key "library")
+  "flc" '((lambda () (interactive) (consult-find "~/library/christian")) :which-key "christian")
+
   ;; notes
   "na" '((lambda () (interactive) (consult-find erasmo-env-agenda-directory)) :which-key "agenda")
   "no" '((lambda () (interactive) (consult-find erasmo-env-org-directory)) :which-key "org")

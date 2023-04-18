@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+;; bible----------
+
 ;; access the bible with dtk
 ;; pre-requsites
 ;; 1. diatheke is installed
@@ -10,7 +12,7 @@
   (dtk-module-category "Biblical Texts")
   (dtk-word-wrap t)
   :config
-  (setenv "SWORD_PATH" "/sword")
+  (setenv "SWORD_PATH" erasmo-env-library-sword-directory)
   :init
   (erasmo-keybind-leader-key-def "si"
     '(dtk-bible :which-key "insert passage")))
