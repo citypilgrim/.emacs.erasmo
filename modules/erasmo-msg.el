@@ -1,5 +1,10 @@
 ;; -*- lexical-binding: t; -*-
 
+;; particulars----------
+
+(setq user-full-name erasmo-env-user-full-name)
+(setq user-mail-address erasmo-env-user-mail-address)
+
 ;; IRC----------
 
 (require 'erc)
@@ -56,5 +61,11 @@
 (customize-set-variable 'erc-log-channels-directory nil)
 
 ;; telegram----------
+
+
+;; news----------
+(use-package gnus
+  :custom
+  (gnus-select-method '(nntp "news.eternal-september.org")))
 
 (provide 'erasmo-msg)

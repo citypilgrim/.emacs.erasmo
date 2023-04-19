@@ -169,12 +169,12 @@ manually with something like this:
   ;; (lsp-java-server-install-dir "/opt/jdtls/test")
 
   ;; settings for gradle
-  (lsp-java-import-gradle-home "/opt/gradle/gradle-7.4.2")
-  (lsp-java-import-gradle-java-home "/gnu/store/mxpgwmjbrq3qzx3asg27hf60i56b0f76-openjdk-11.0.17")
+  ;; (lsp-java-import-gradle-home "/opt/gradle/gradle-7.4.2")
+  ;; (lsp-java-import-gradle-java-home "/gnu/store/mxpgwmjbrq3qzx3asg27hf60i56b0f76-openjdk-11.0.17")
   (lsp-java-import-gradle-user-home "~/.gradle")
   (lsp-java-import-gradle-enabled t)
-  (lsp-java-import-gradle-version "7.4.2")
-  (lsp-java-import-gradle-wrapper-enabled nil)
+  ;; (lsp-java-import-gradle-version "7.4.2")
+  (lsp-java-import-gradle-wrapper-enabled t)
   ;; lsp-java-import-gradle-arguments
   ;; lsp-java-import-gradle-jvm-arguments
   ;; lsp-java-import-gradle-offline-enabled
