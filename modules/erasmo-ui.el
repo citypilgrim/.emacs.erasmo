@@ -31,8 +31,6 @@
   (set-face-attribute 'fixed-pitch nil
                       :font "Fira Code Retina"
                       :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor)))
-
-  ;; Set the fixed pitch face
   (set-face-attribute 'Info-quoted nil
                       :font "Fira Code Retina"
                       :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor)))
