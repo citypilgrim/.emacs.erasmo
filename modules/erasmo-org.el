@@ -30,13 +30,47 @@
   (add-hook 'org-agenda-after-show-hook #'org-mode)
   :config
   (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
-  (add-to-list 'org-babel-load-languages '(shell . t))
+  (add-to-list 'org-babel-load-languages '(shell . t)))
+
+(defun erasmo-org--babel-tangle-dont-ask ()
+  ;; Dynamic scoping to the rescue
+  (let ((org-confirm-babel-evaluate nil))
+    (org-babel-tangle)))
+
+(defun erasmo-org--mode-setup ()
+  ;; turn on indentation and auto-fill mode for org files
+  (org-indent-mode)
+  (diminish 'org-indent-mode)
+  (variable-pitch-mode 1)
+  (auto-fill-mode 0)
+  (visual-line-mode 1)
+  (diminish 'visual-line-mode)
+  (flyspell-mode 1)
+  (diminish 'flyspell-mode)
+  (erasmo-org--setup-org-faces)
+  )
+
+(defun erasmo-org--setup-org-faces ()
+  ;; Set faces for heading levels
+  (set-face-attribute 'org-document-title nil :font "Iosevka Aile"
+                      :weight 'bold :height 1.3)
+  (dolist (face '((org-level-1 . 1.2)
+                  (org-level-2 . 1.1)
+                  (org-level-3 . 1.05)
+                  (org-level-4 . 1.0)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.1)
+                  (org-level-7 . 1.1)
+                  (org-level-8 . 1.1)))
+    (set-face-attribute (car face) nil :font "Iosevka Aile"
+                        :weight 'regular :height (cdr face)))
+
   ;; fonts
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil  :inherit 'fixed-pitch)
-  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
   (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
@@ -55,48 +89,6 @@
   ;; '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
   ;; '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
   )
-
-(defun erasmo-org--babel-tangle-dont-ask ()
-  ;; Dynamic scoping to the rescue
-  (let ((org-confirm-babel-evaluate nil))
-    (org-babel-tangle)))
-
-(defun erasmo-org--mode-setup ()
-  ;; turn on indentation and auto-fill mode for org files
-  (org-indent-mode)
-  (diminish 'org-indent-mode)
-  (variable-pitch-mode 1)
-  (auto-fill-mode 0)
-  (visual-line-mode 1)
-  (diminish 'visual-line-mode)
-  (flyspell-mode 1)
-  (diminish 'flyspell-mode))
-
-(defun erasmo-org--setup-org-faces ()
-  ;; Set faces for heading levels
-  (set-face-attribute 'org-document-title nil :font "Iosevka Aile"
-                      :weight 'bold :height 1.3)
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Iosevka Aile"
-                        :weight 'regular :height (cdr face)))
-
-  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face
-                                                          fixed-pitch))
-  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch))
-(erasmo-org--setup-org-faces)
 
 ;; modern display
 (use-package org-modern)
