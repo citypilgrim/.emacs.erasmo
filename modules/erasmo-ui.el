@@ -67,21 +67,14 @@
 ;; Themes used have to be acceptive of the font faces defined in
 ;; erasmo-ui--set-tab-bar-faces
 
-(use-package spacegray-theme :defer t)
-
 (use-package doom-themes
   :defer t
   :config
   (doom-themes-visual-bell-config)
   )
 
-(use-package ample-theme
-  :init (progn (load-theme 'ample t t)
-               (load-theme 'ample-flat t t)
-               (load-theme 'ample-light t t))
+(use-package ef-themes
   :defer t)
-
-(use-package autumn-light-theme :defer t)
 
 (defun erasmo-ui--init-theme (theme)
   "Enhance `load-theme' by first disabling enabled themes."
@@ -102,28 +95,28 @@
   "
          Dark                ^Light^
     ----------------------------------------------
-    _1_ zenburn          _w_ flatwhite
-    _2_ ample            _e_ autumn
-    _3_ snazzy           ^
-    _4_ old-hope         ^
-    _5_ henna                ^
-    _6_ palenight            ^
-    _7_ peacock              ^
-    _q_ quit                 ^
-    ^                        ^
+    _1_ zenburn          _w_ day
+    _2_ fairy-floss      _e_ duo
+    _3_ nova             _r_ solar
+    _4_ palenight        _t_ flatwhite
+    _5_ peacock          ^
+    _6_ snazzy           ^
+    _q_ quit             ^
+    ^                    ^
     "
   ;; Dark
   ("1" (erasmo-ui--load-theme 'doom-zenburn) "zenburn")
-  ("2" (erasmo-ui--load-theme 'ample-flat) "ample")
-  ("3" (erasmo-ui--load-theme 'doom-snazzy) "snazzy")
-  ("4" (erasmo-ui--load-theme 'doom-old-hope) "old-hope")
-  ("5" (erasmo-ui--load-theme 'doom-henna) "henna")
-  ("6" (erasmo-ui--load-theme 'doom-palenight) "doom-palenight")
-  ("7" (erasmo-ui--load-theme 'doom-peacock) "peacock")
+  ("2" (erasmo-ui--load-theme 'doom-fairy-floss) "fairy-floss")
+  ("3" (erasmo-ui--load-theme 'doom-nova) "nova")
+  ("4" (erasmo-ui--load-theme 'doom-palenight) "palenight")
+  ("5" (erasmo-ui--load-theme 'doom-peacock) "peacock")
+  ("6" (erasmo-ui--load-theme 'doom-snazzy) "snazzy")
 
   ;; Light
-  ("w" (erasmo-ui--load-theme 'doom-flatwhite) "flatwhite")
-  ("e" (erasmo-ui--load-theme 'autumn-light) "autumn")
+  ("w" (erasmo-ui--load-theme 'ef-day) "day")
+  ("e" (erasmo-ui--load-theme 'ef-duo-light) "duo")
+  ("r" (erasmo-ui--load-theme 'doom-solarized-light) "solar")
+  ("t" (erasmo-ui--load-theme 'doom-flatwhite) "flatwhite")
 
   ("q" nil))
 
