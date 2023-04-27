@@ -42,3 +42,4 @@
 (require 'erasmo-ai)
 (require 'erasmo-latex)
 (require 'erasmo-msg)
+(require 'erasmo-workflow)
