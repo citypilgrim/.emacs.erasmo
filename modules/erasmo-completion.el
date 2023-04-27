@@ -12,9 +12,9 @@
   (corfu-popupinfo-mode 1)
   (eldoc-add-command #'corfu-insert)
   :bind (:map corfu-map
-	      ("M-p" . corfu-popupinfo-scroll-down)
-	      ("M-n" . corfu-popupinfo-scroll-up)
-	      ("M-d" . corfu-popupinfo-toggle))
+              ("M-p" . corfu-popupinfo-scroll-down)
+              ("M-n" . corfu-popupinfo-scroll-up)
+              ("M-d" . corfu-popupinfo-toggle))
   :custom
   (corfu-cycle t)                 ; Allows cycling through candidates
   (corfu-auto t)                  ; Enable auto completion
@@ -49,10 +49,10 @@
 ;; and behaves as a pure `completion-at-point-function'.
 (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)
 (add-hook 'eshell-mode-hook
-	  (lambda () (setq-local corfu-quit-at-boundary t
-				 corfu-quit-no-match t
-				 corfu-auto nil)
-	    (corfu-mode)))
+          (lambda () (setq-local corfu-quit-at-boundary t
+                                 corfu-quit-no-match t
+                                 corfu-auto nil)
+            (corfu-mode)))
 
 ;; minimalist vertical completion UI based on the default completion system
 ;; Enable vertico
@@ -70,8 +70,7 @@
   ;; (setq vertico-resize t)
 
   ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  )
+  (setq vertico-cycle t))
 
 ;; completion style that matches candidates in any order
 (use-package orderless
@@ -147,5 +146,12 @@
   :init
   (setq completion-in-region-function #'consult-completion-in-region)
   )
+
+;; discovering keybindings with embark
+(require 'embark)
+(global-set-key [remap describe-bindings] #'embark-bindings)
+(global-set-key (kbd "C-.") 'embark-act)
+;; Use Embark to show bindings in a key prefix with `C-h`
+(setq prefix-help-command #'embark-prefix-help-command)
 
 (provide 'erasmo-completion)

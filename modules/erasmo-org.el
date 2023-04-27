@@ -135,6 +135,10 @@
         ("BACK" . (:foreground "MediumPurple3" :weight bold))
         ("INACTIVE" . (:foreground "purple2" :weight bold))))
 
+(add-hook 'org-after-todo-state-change-hook
+          (lambda () (when (equal "DONE" org-state)
+                       (call-interactively #'org-archive-to-archive-sibling))))
+
 ;; agenda
 ;; show a timeline of scheduled tasks with org-agenda-list
 (defun erasmo-org-set-org-agenda-files ()
@@ -270,8 +274,6 @@
   "oa" '(org-agenda :which-key "status")
   "oc" '(org-capture t :which-key "capture")
   "ox" '(org-export-dispatch t :which-key "export"))
-
-;; note taking----------
 
 
 (provide 'erasmo-org)

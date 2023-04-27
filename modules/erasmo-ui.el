@@ -5,6 +5,16 @@
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 
+;; add visual pulse when changing focus, like beacon but built-in
+;; from from https://karthinks.com/software/batteries-included-with-emacs/
+(defun pulse-line (&rest _)
+  "Pulse the current line."
+  (pulse-momentary-highlight-one-line (point)))
+
+(dolist (command '(scroll-up-command scroll-down-command
+                                     recenter-top-bottom other-window))
+  (advice-add command :after #'pulse-line))
+
 ;; time
 (setenv "TZ" "UTC-8")
 (customize-set-variable 'display-time-format "%l:%M %p %b %y")
@@ -41,6 +51,12 @@
                       :height (ceiling (* erasmo-ui--font-size erasmo-ui--font-scale-factor))))
 
 (add-hook 'after-init-hook #'erasmo-ui-set-font)
+
+;; emoji support
+(use-package emojify
+  :hook (after-init . global-emojify-mode)
+  :custom
+  (emojify-download-emojis-p nil))
 
 ;; pretty icons
 (use-package all-the-icons

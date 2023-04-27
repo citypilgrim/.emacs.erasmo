@@ -5,6 +5,29 @@
   :init
   (savehist-mode))
 
+;; Window configuration for special windows.
+;; This section inspired by the article "Demystifying Emacs’s Window
+;; Manager" found here:
+;; https://www.masteringemacs.org/article/demystifying-emacs-window-manager
+(add-to-list 'display-buffer-alist
+             '("\\*Help\\*"
+               (display-buffer-reuse-window display-buffer-pop-up-window)))
+
+(add-to-list 'display-buffer-alist
+             '("\\*Completions\\*"
+               (display-buffer-reuse-window display-buffer-pop-up-window)
+               (inhibit-same-window . t)
+               (window-height . 10)))
+
+;; Show dictionary definition on the left
+(add-to-list 'display-buffer-alist
+             '("^\\*Dictionary\\*"
+               (display-buffer-in-side-window)
+               (side . left)
+               (window-width . 70)))
+;; define a key to define the word at point.
+(define-key global-map (kbd "M-#") #'dictionary-lookup-definition)
+
 ;; prevent emacs from popping new windows when we run commands
 (setq display-buffer-base-action
       '(display-buffer-reuse-mode-window
@@ -124,10 +147,13 @@
 (setq even-window-sizes nil)
 
 
-;; nice documentation
+;;  documentation
 (use-package helpful
   :bind
   ("C-h p" . helpful-at-point))
+
+(require 'elisp-demos) ;; also add some examples
+(advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
 
 ;; project management
 (use-package project
