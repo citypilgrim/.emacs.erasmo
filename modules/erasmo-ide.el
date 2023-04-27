@@ -66,7 +66,7 @@
 ;; language server support
 (use-package eglot
   :hook
-  (eglot-managed-mode . electric-pair-mode)
+  (eglot-managed-mode . electric-pair-local-mode)
   :custom
   (eglot-autoshutdown t)
   :config
