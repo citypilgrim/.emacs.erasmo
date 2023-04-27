@@ -98,8 +98,7 @@
  "nr" '(erasmo-notes-org-roam-node-from-cite :which-key "new reference")
  "nT" '((lambda (ref) (interactive "sRef: ") (org-roam-ref-add ref)) :which-key "org-roam-ref-add"))
 
-;; visualising note network
-;; TODO learn how to expose port
+;; visualising note network on localhost:35901
 (use-package org-roam-ui
   :after org-roam
   :config
@@ -107,6 +106,9 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+(add-to-list 'load-path
+             (concat user-emacs-directory "elpa/org-roam-ui-20221105.1040"))
+(require 'org-roam-ui)
 
 
 ;; workflow----------
