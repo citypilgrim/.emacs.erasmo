@@ -8,10 +8,11 @@
 ;; 2. SWORD_PATH points to where modules are kept
 (use-package dtk
   :custom
-  (dtk-module "ASV")
+  (dtk-module "ESV")
   (dtk-module-category "Biblical Texts")
   (dtk-word-wrap t)
   :config
+  ;; SWORD_PATH has to be an absolute path, without "~"
   (setenv "SWORD_PATH" erasmo-env-library-sword-directory)
   :init
   (erasmo-keybind-leader-key-def "si"
