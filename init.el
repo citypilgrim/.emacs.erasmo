@@ -43,3 +43,4 @@
 (require 'erasmo-latex)
 (require 'erasmo-msg)
 (require 'erasmo-workflow)
+(require 'erasmo-markup)
