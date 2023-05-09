@@ -97,6 +97,7 @@
 
   "fl" '(:ignore t :which-key "library")
   "flc" '((lambda () (interactive) (consult-find "~/library/christian")) :which-key "christian")
+  "fls" '((lambda () (interactive) (consult-find "~/library/software")) :which-key "software")
 
   ;; notes
   "na" '((lambda () (interactive) (consult-find erasmo-env-agenda-directory)) :which-key "agenda")
