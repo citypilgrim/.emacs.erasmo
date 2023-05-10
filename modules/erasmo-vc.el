@@ -111,4 +111,9 @@
 ;; package management with guix
 (use-package guix)
 
+;; container management with docker
+(use-package docker
+  :ensure t
+  :bind ("C-c d" . docker))
+
 (provide 'erasmo-vc)
