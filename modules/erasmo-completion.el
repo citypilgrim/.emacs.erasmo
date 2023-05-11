@@ -148,7 +148,7 @@
   )
 
 ;; discovering keybindings with embark
-(require 'embark)
+(use-package embark)
 (global-set-key [remap describe-bindings] #'embark-bindings)
 (global-set-key (kbd "C-.") 'embark-act)
 ;; Use Embark to show bindings in a key prefix with `C-h`

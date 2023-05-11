@@ -78,6 +78,10 @@
   (all-the-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'all-the-icons-completion-marginalia-setup))
 
+;; for ibuffer
+(use-package all-the-icons-ibuffer
+  :hook (ibuffer-mode . all-the-icons-ibuffer-mode))
+
 ;; Themes
 ;; A nice gallery of Emacs themes can be found at https://emacsthemes.com/.
 ;; Themes used have to be acceptive of the font faces defined in

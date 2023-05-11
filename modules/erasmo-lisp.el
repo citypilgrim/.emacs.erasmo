@@ -36,4 +36,7 @@
     (setq tempel-path (list tempel-path)))
   (add-to-list 'tempel-path "~/src/guix/etc/snippets/tempel/*"))
 
+;; for elisp package dev
+(use-package flycheck-eldev)
+
 (provide 'erasmo-lisp)

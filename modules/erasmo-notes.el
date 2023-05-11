@@ -106,9 +106,6 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
-(add-to-list 'load-path
-             (concat user-emacs-directory "elpa/org-roam-ui-20221105.1040"))
-(require 'org-roam-ui)
 
 
 ;; workflow----------

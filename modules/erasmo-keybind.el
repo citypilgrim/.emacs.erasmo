@@ -1,5 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
+(global-set-key (kbd "C-x b") #'ibuffer)
+
 ;; which-key; transient preview of keybindings
 (defun erasmo-keybind--diminish-which-key ()
   (eval-after-load "which-key" '(diminish 'which-key-mode)))

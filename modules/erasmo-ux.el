@@ -152,7 +152,7 @@
   :bind
   ("C-h p" . helpful-at-point))
 
-(require 'elisp-demos) ;; also add some examples
+(use-package elisp-demos)               ;also add some examples
 (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update)
 
 ;; project management

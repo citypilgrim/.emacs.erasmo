@@ -61,6 +61,7 @@
 (customize-set-variable 'erc-log-channels-directory nil)
 
 ;; telegram----------
+;; installed via guix
 
 
 ;; news----------
