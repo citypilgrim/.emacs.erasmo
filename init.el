@@ -44,3 +44,4 @@
 (require 'erasmo-msg)
 (require 'erasmo-workflow)
 (require 'erasmo-markup)
+(require 'erasmo-apps)
