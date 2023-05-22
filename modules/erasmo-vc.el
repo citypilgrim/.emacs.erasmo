@@ -31,7 +31,7 @@
   :after magit
   :config
   (if erasmo-env-forge-alist
-      (add-to-list 'forge-alist erasmo-env-forge-alist)))
+      (setq forge-alist (append forge-alist erasmo-env-forge-alist))))
 
 ;; show todos in git status
 (use-package magit-todos
