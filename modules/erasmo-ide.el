@@ -180,4 +180,17 @@ manually with something like this:
   ;; lsp-java-import-gradle-offline-enabled
   )
 
+;;; cmake
+(use-package cmake-mode)
+
+(use-package cmake-project)
+;; activate mode when detected CMakeLists.txt within project dir
+(defun maybe-cmake-project-mode ()
+  (if (or (file-exists-p "CMakeLists.txt")
+          (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
+      (cmake-project-mode)))
+(add-hook 'c-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-mode)
+
+
 (provide 'erasmo-ide)
