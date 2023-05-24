@@ -135,8 +135,9 @@
         ("BACK" . (:foreground "MediumPurple3" :weight bold))
         ("INACTIVE" . (:foreground "purple2" :weight bold))))
 
+;; modify the code below to only archive if the property ARCHIVE is not nil
 (add-hook 'org-after-todo-state-change-hook
-          (lambda () (when (equal "DONE" org-state)
+          (lambda () (when (and (not (string= (org-entry-get (point) "ARCHIVE") "NOARCHIVE")) (equal "DONE" org-state))
                        (call-interactively #'org-archive-to-archive-sibling))))
 
 ;; agenda
