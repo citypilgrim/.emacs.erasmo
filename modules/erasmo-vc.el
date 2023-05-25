@@ -23,6 +23,9 @@
   (add-to-list 'transient-levels '((magit-commit
                                     (magit:--gpg-sign . 1)))))
 
+(use-package magit-svn
+  :hook (magit-mode-hook magit-svn-mode))
+
 ;; code review with forge
 ;; Most of the forge commands can be retrieved from it's transient buffer. To edit currently visited issue with easy through key bindings, we utilise the the following key maps:
 ;; 1. ~C-c C-e~ on the field to edit
