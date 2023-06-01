@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-;; columne numbering in modeline
+;; column numbering in modeline
 (column-number-mode)
 
 ;; tweaking eldoc
@@ -23,6 +23,9 @@
 ;; text wrapping
 (add-hook 'prog-mode-hook #'(lambda () (toggle-truncate-lines 1)))
 
+;; paranthesis management
+(add-hook 'prog-mode-hook (lambda () (electric-pair-mode)))
+
 ;; linting
 (use-package flycheck
   :init
@@ -43,8 +46,6 @@
 
 ;; eglot
 (use-package eglot
-  :hook
-  (eglot-managed-mode . electric-pair-local-mode)
   :custom
   (eglot-autoshutdown t)
   :config
