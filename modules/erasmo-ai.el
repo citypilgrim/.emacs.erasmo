@@ -21,8 +21,15 @@
         whisper-translate nil
         whisper--ffmpeg-input-device "RDPSource"))
 
+;; chatGPT
 (use-package gptel
   :custom
-  (gptel-api-key erasmo-env-openai-token))
+  (gptel-api-key erasmo-env-openai-token)
+  (gptel-model "gpt-3.5-turbo"))
+
+;; chatGPT + dall-e
+;; (use-package chatgpt-shell
+;;   :custom
+;;   (chatgpt-shell-openai-key erasmo-env-openai-token))
 
 (provide 'erasmo-ai)

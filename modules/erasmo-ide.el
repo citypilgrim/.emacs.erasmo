@@ -29,41 +29,19 @@
   (global-flycheck-mode)
   (diminish 'flycheck-mode))
 
-;; lanugage specific settings
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil
-                  tab-width 4
-                  python-indent-offset 4
-                  flycheck-flake8-maximum-line-length 120)))
+;;; cmake
+(use-package cmake-mode)
 
-;; python uses virtual environments to sandbox it's dependencies
-;; activate the correct virtual encironment with
-;; M-x pyvenv-activate RET /path/to/env
-(use-package pyvenv
-  :hook ((python-mode . pyvenv-mode)
-         (python-mode . pyvenv-tracking-mode))
-  :config
-  ;; Set correct Python interpreter
-  (setq pyvenv-post-activate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
-  (setq pyvenv-post-deactivate-hooks
-        (list (lambda ()
-                (setq python-shell-interpreter "python3")))))
+(use-package cmake-project)
+;; activate mode when detected CMakeLists.txt within project dir
+(defun maybe-cmake-project-mode ()
+  (if (or (file-exists-p "CMakeLists.txt")
+          (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
+      (cmake-project-mode)))
 
-(add-hook 'js-mode-hook
-          (lambda ()
-            (setq indent-tabs-mode nil
-                  tab-width 2)))
+;;; language server
 
-(use-package groovy-mode
-  :init
-  (add-to-list 'auto-mode-alist '("\\build.gradle\\'" . groovy-mode)))
-
-(use-package dockerfile-mode)
-
-;; language server support
+;; eglot
 (use-package eglot
   :hook
   (eglot-managed-mode . electric-pair-local-mode)
@@ -102,8 +80,8 @@ manually with something like this:
 (with-eval-after-load "eglot"
   (erasmo-ide--add-eglot-hooks eglot-server-programs))
 
-;; language server support, lsp for java
-;; TODO incoporate lsp mode
+
+;; lsp
 (defun erasmo-ide--lsp-mode-setup ()
   (setq lsp-headerline-breadcrumb-segments '(path-up-to-project file symbols))
   (lsp-headerline-breadcrumb-mode)
@@ -146,6 +124,7 @@ manually with something like this:
   :custom
   (lsp-treemacs-sync-mode t))
 
+;;; java
 (use-package lsp-java
   :hook (java-mode . indent-tabs-mode)
   :init
@@ -180,17 +159,46 @@ manually with something like this:
   ;; lsp-java-import-gradle-offline-enabled
   )
 
-;;; cmake
-(use-package cmake-mode)
-
-(use-package cmake-project)
-;; activate mode when detected CMakeLists.txt within project dir
-(defun maybe-cmake-project-mode ()
-  (if (or (file-exists-p "CMakeLists.txt")
-          (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
-      (cmake-project-mode)))
+;;; c/c++ programming
 (add-hook 'c-mode-hook 'maybe-cmake-project-mode)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'c-mode-hook #'lsp-deferred)
+(add-hook 'c++-mode-hook #'lsp-deferred)
+
+;;; python
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  tab-width 4
+                  python-indent-offset 4
+                  flycheck-flake8-maximum-line-length 120)))
+
+;; python uses virtual environments to sandbox it's dependencies
+;; activate the correct virtual encironment with
+;; M-x pyvenv-activate RET /path/to/env
+(use-package pyvenv
+  :hook ((python-mode . pyvenv-mode)
+         (python-mode . pyvenv-tracking-mode))
+  :config
+  ;; Set correct Python interpreter
+  (setq pyvenv-post-activate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter (concat pyvenv-virtual-env "bin/python3")))))
+  (setq pyvenv-post-deactivate-hooks
+        (list (lambda ()
+                (setq python-shell-interpreter "python3")))))
+;;; javascrpit
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq indent-tabs-mode nil
+                  tab-width 2)))
+;;; groovy
+(use-package groovy-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\build.gradle\\'" . groovy-mode)))
+
+;;; docker
+(use-package dockerfile-mode)
 
 
 (provide 'erasmo-ide)
