@@ -107,7 +107,7 @@
   :bind (:map dired-mode-map
               ("M-<return>" . #'dired-up-directory))
   :config
-  (setq dired-listing-switches "-agho --group-directories-first"
+  (setq dired-listing-switches "-ahl --group-directories-first"
         dired-omit-verbose nil)
 
   :init
