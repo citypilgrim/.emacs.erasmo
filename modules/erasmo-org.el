@@ -16,7 +16,6 @@
   (org-edit-src-content-indentation 2)
   (org-hide-block-startup nil)
   (org-src-preserve-indentation nil)
-  (org-startup-folded 'showeverything)
   (org-cycle-separator-lines 2)
   (org-outline-path-complete-in-steps nil) ;refile in a single go
   (org-refile-use-outline-path t)       ;show full path when refiling
