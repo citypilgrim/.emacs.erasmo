@@ -201,5 +201,16 @@ manually with something like this:
 ;;; docker
 (use-package dockerfile-mode)
 
+;; debugging with gdb
+(use-package gdb-mi
+  :custom
+  (gdb-many-windows t)
+  (gdb-show-main t))
+
+;; coverage
+;; cov-mode runs the profiling mode, i.e. demarking coverage with number of calls
+;; setting cov-coverage-mode to t before activating cov-mode activates coverage
+;; mode, which shows either cover or no cover
+(use-package cov)
 
 (provide 'erasmo-ide)

@@ -71,28 +71,24 @@
            (file-relative-name (org-roam-node-file node) org-roam-directory))))
       (error ""))))
 
-;; TODO fix citation workflow
-;; 1. Use Zotero Web Connector to add source into Zotero
-;; 2. Zotero automatically fetches offline copy of source material, if possible. If not, I will manually fetch it and add it to the Zotero library. BetterBibTex automatically updates biblio.bib, making it available to Emacs.
-;; 3. I call erasmo-notes-org-roam-node-from-cite, select the correct reference, and a new reference zettel is created.
-;; 4. I read the source material using a local program, making multiple passes and annotate along the way. I then jot notes, and find existing zettels in my zettelkasten to link to
-(defun erasmo-notes-org-roam-node-from-cite (keys-entries)
-  (interactive (list (citar-select-ref :filter nil)))
-  (let ((title (citar-format--entry
-                "${author editor} :: ${title}"
-                (citar-get-entry keys-entries))))
-    (org-roam-capture- :templates
-                       '(("r" "reference" plain "%?" :if-new
-                          (file+head "reference/${citekey}.org"
-                                     ":PROPERTIES:
-  :ROAM_REFS: [cite:@${citekey}]
-  :END:
-  ,#+title: ${title}\n")
-                          :immediate-finish t
-                          :unnarrowed t))
-                       :info (list :citekey keys-entries)
-                       :node (org-roam-node-create :title title)
-                       :props '(:finalize find-file))))
+(eval-after-load 'citar
+  (defun erasmo-notes-org-roam-node-from-cite (keys-entries)
+    (interactive (list (citar-select-ref :filter nil)))
+    (let ((title (citar-format--entry
+                  "${author editor} :: ${title}"
+                  (citar-get-entry keys-entries))))
+      (org-roam-capture- :templates
+                         '(("r" "reference" plain "%?" :if-new
+                            (file+head "reference/${citekey}.org"
+                                       ":PROPERTIES:
+:ROAM_REFS: [cite:@${citekey}]
+:END:
+#+title: ${title}\n")
+                            :immediate-finish t
+                            :unnarrowed t))
+                         :info (list :citekey keys-entries)
+                         :node (org-roam-node-create :title title)
+                         :props '(:finalize find-file)))))
 
 (erasmo-keybind-leader-key-def
  "nr" '(erasmo-notes-org-roam-node-from-cite :which-key "new reference")
