@@ -80,6 +80,7 @@ manually with something like this:
 ;; add eglot to existing programming modes when eglot is loaded.
 (with-eval-after-load "eglot"
   (erasmo-ide--add-eglot-hooks eglot-server-programs))
+(setq sh-mode-hook (cdr sh-mode-hook))  ;no lsp for sh mode yet
 
 
 ;; lsp
