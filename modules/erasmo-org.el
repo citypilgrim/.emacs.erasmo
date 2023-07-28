@@ -294,5 +294,6 @@
         (cl-remove-if (lambda (p) (string-match-p "secret" p)) dirs)))
 (customize-set-variable 'org-mobile-inbox-for-pull erasmo-env-slipbox)
 (customize-set-variable 'org-mobile-directory erasmo-env-org-mobile-directory)
+(customize-set-variable 'org-mobile-capture-file "mobileorg-slipbox.org")
 
 (provide 'erasmo-org)
