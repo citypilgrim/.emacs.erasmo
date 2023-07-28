@@ -1,4 +1,5 @@
 ;; -*- lexical-binding: t; -*-
+(require 'erasmo-util)
 
 ;; core config
 (use-package org
@@ -286,14 +287,14 @@
 ;;; org-mobile
 (require 'org-mobile)
 (setq org-directory erasmo-env-org-directory)
-(customize-set-variable 'org-mobile-agendas (list))
+(customize-set-variable 'org-mobile-agendas 'all)
 (customize-set-variable 'org-mobile-files
-      (let ((dirs (directory-files
-                   erasmo-env-org-roam-directory t
-                   "^[^.]+$" t)))
-        (cl-remove-if (lambda (p) (string-match-p "secret" p)) dirs)))
+                        (append
+                         (erasmo-util-ls-dirs erasmo-env-org-roam-directory "secret")
+                         `(,erasmo-env-agenda-directory)))
 (customize-set-variable 'org-mobile-inbox-for-pull erasmo-env-slipbox)
 (customize-set-variable 'org-mobile-directory erasmo-env-org-mobile-directory)
-(customize-set-variable 'org-mobile-capture-file "mobileorg-slipbox.org")
+(customize-set-variable 'org-mobile-use-encryption t)
+(customize-set-variable 'org-mobile-encryption-password erasmo-env-org-mobile-encryption-password)
 
 (provide 'erasmo-org)
