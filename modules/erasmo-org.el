@@ -29,7 +29,8 @@
   (add-hook 'org-agenda-after-show-hook #'org-mode)
   :config
   (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
-  (add-to-list 'org-babel-load-languages '(shell . t)))
+  (add-to-list 'org-babel-load-languages '(shell . t))
+  )
 
 (defun erasmo-org--babel-tangle-dont-ask ()
   ;; Dynamic scoping to the rescue
@@ -90,15 +91,20 @@
   )
 
 ;; modern display
-(use-package org-modern)
-(global-org-modern-mode)
+(use-package org-modern
+  :after org
+  :init
+  (global-org-modern-mode)
+  )
 
 ;; toggle hidden elements
 (use-package org-appear
+  :after org
   :hook (org-mode . org-appear-mode))
 
 ;; narrowing the view
 (use-package visual-fill-column
+  :after org
   :hook (org-mode . erasmo-org--mode-visual-fill))
 
 (defun erasmo-org--mode-visual-fill ()
@@ -119,7 +125,7 @@
 (add-to-list 'org-structure-template-alist '("yaml" . "src yaml"))
 (add-to-list 'org-structure-template-alist '("json" . "src json"))
 
-;; workflow----------
+;;; workflow
 
 ;; task states
 ;; note that we can filter the task in a buffer by org-sparse-tree
@@ -134,10 +140,12 @@
         ("BACK" . (:foreground "MediumPurple3" :weight bold))
         ("INACTIVE" . (:foreground "purple2" :weight bold))))
 
+(setq org-tag-alist erasmo-env-org-tag-alist)
+
 ;; modify the code below to only archive if the property ARCHIVE is not nil
 (add-hook 'org-after-todo-state-change-hook
           (lambda () (when (and (not (string= (org-entry-get (point) "ARCHIVE") "NOARCHIVE")) (equal "DONE" org-state))
-                       (call-interactively #'org-archive-to-archive-sibling))))
+                       (call-interactively #'org-archivea-to-archive-sibling))))
 
 ;; agenda
 ;; show a timeline of scheduled tasks with org-agenda-list
@@ -227,7 +235,7 @@
 ;;   (setq org-gcal-file-alist `((,erasmo-env-email . ,erasmo-env-org-gcal-file)))
 ;;   )
 
-;; presentation----------
+;;; presentation
 (use-package hide-mode-line)
 
 (defun erasmo-org--presentation-setup ()
@@ -261,11 +269,11 @@
   (org-tree-slide-breadcrumbs " > ")
   (org-image-actual-width nil))
 
-;; export----------
+;;; export
 (require 'ox-beamer)                    ; latex slides
 
 
-;; keybind----------
+;;; keybind
 (erasmo-keybind-leader-key-def
   "oi" '(:ignore t :which-key "insert")
   "oil" '(org-insert-link :which-key "insert link")
@@ -275,5 +283,16 @@
   "oc" '(org-capture t :which-key "capture")
   "ox" '(org-export-dispatch t :which-key "export"))
 
+;;; org-mobile
+(require 'org-mobile)
+(setq org-directory erasmo-env-org-directory)
+(customize-set-variable 'org-mobile-agendas (list))
+(customize-set-variable 'org-mobile-files
+      (let ((dirs (directory-files
+                   erasmo-env-org-roam-directory t
+                   "^[^.]+$" t)))
+        (cl-remove-if (lambda (p) (string-match-p "secret" p)) dirs)))
+(customize-set-variable 'org-mobile-inbox-for-pull erasmo-env-slipbox)
+(customize-set-variable 'org-mobile-directory erasmo-env-org-mobile-directory)
 
 (provide 'erasmo-org)
