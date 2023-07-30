@@ -146,7 +146,7 @@
 ;; modify the code below to only archive if the property ARCHIVE is not nil
 (add-hook 'org-after-todo-state-change-hook
           (lambda () (when (and (not (string= (org-entry-get (point) "ARCHIVE") "NOARCHIVE")) (equal "DONE" org-state))
-                       (call-interactively #'org-archivea-to-archive-sibling))))
+                       (call-interactively #'org-archive-to-archive-sibling))))
 
 ;; agenda
 ;; show a timeline of scheduled tasks with org-agenda-list
