@@ -162,10 +162,15 @@ manually with something like this:
   )
 
 ;;; c/c++ programming
-(add-hook 'c-mode-hook 'maybe-cmake-project-mode)
-(add-hook 'c++-mode-hook 'maybe-cmake-project-mode)
-(add-hook 'c-mode-hook #'lsp-deferred)
-(add-hook 'c++-mode-hook #'lsp-deferred)
+(defun erasmo-ide--setup-cc-mode ()
+  (maybe-cmake-project-mode)
+  (lsp-deferred)
+  (require 'dap-cpptools)
+  (dap-cpptools-setup))
+(use-package cc-mode
+  :hook
+  ((c-mode . erasmo-ide--setup-cc-mode)
+   (c++-mode . erasmo-ide--setup-cc-mode)))
 
 ;;; python
 (add-hook 'python-mode-hook
