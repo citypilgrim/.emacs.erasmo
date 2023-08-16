@@ -20,7 +20,8 @@
       (error "It seems that an attachment is needed, but none was found. Aborting sending."))))
 (add-hook 'message-send-hook 'erasmo-msg--message-pre-send-check-attachment)
 
-(setq epa-file-cache-passphrase-for-symmetric-encryption t) ; ask encryption password once
+;; (setq epa-file-cache-passphrase-for-symmetric-encryption t) ; ask encryption password once
+
 (add-hook 'message-mode-hook
           '(lambda ()
              (flyspell-mode t)))
@@ -30,27 +31,26 @@
   (interactive)
   (gnus-group-list-all-groups 5))
 
+;; TODO fix eternal september
 (use-package gnus
   :defer t
-  :hook
-  (gnus-group-mode . gnus-topic-mode)   ;tree view for groups
   :custom
-  (gnus-select-method '(nntp "news.eternal-september.org"))
+  ;; (gnus-select-method '(nntp "news.eternal-september.org"))
+  (gnus-select-method erasmo-env-gnus-select-method)
   (gnus-thread-sort-functions '(gnus-thread-sort-by-most-recent-date
                                 (not gnus-thread-sort-by-number)))
-  (gnus-use-cache t)
+  ;; (gnus-use-cache t)
   (gnus-read-active file 'some)
   (gnus-summary-thread-gathering-function 'gnus-gather-threads-by-subject)
   (gnus-thread-hide-subtree t)          ;might want to comment this
   (gnus-thread-ignore-subject t)        ;might want to comment this
   :config
   (if erasmo-env-gnus-secondary-select-methods
-      (add-to-list 'gnus-secondary-select-methods
-                   erasmo-env-gnus-secondary-select-methods))
-  :bind (:map gnus-group-mode-map
-              ("o" . erasmo-msg-gnus-group-list-subscribed-groups))
+      (setq gnus-secondary-select-methods ;use append if this is not nil
+            erasmo-env-gnus-secondary-select-methods))
   :init
   (setq gnus-use-correct-string-widths nil)
+  (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
   ;; organizing the mail folders
   (eval-after-load 'gnus-topic
@@ -62,23 +62,19 @@
                                   (nnfolder-inhibit-expiry t))))
 
        ;; "Gnus" is the root folder, and the added mail accounts
-       (setq gnus-topic-topology (append '(("Gnus" visible))
-                                         erasmo-env-gnus-topic-topologies))
+       (setq gnus-topic-topology erasmo-env-gnus-topic-topologies)
 
        ;; each topic corresponds to a public imap folder
-       (setq gnus-topic-alist (append erasmo-gnus-topic-alist
-                                      '(("Gnus")))))))
-
-(use-package nnir                       ;for searching
-  :after gnus)
+       (setq gnus-topic-alist erasmo-env-gnus-topic-alist))))
 
 (use-package bbdb                       ;for address look up
   :after gnus
   :hook
-  (message-mode . (lambda () ((local-set-key (kbd "TAB") 'bbdb-complete-name))))
+  (message-mode . (lambda () (local-set-key (kbd "TAB") 'bbdb-complete-name)))
   (gnus-startup . bbdb-insinuate-gnus)
   :init
   (bbdb-initialize 'message 'gnus 'sendmail))
+
 
 ;;; IRC
 
