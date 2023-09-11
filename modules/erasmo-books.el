@@ -13,7 +13,7 @@
   (dtk-word-wrap t)
   :config
   ;; SWORD_PATH has to be an absolute path, without "~"
-  (setenv "SWORD_PATH" erasmo-env-library-sword-directory)
+  (setenv "SWORD_PATH" (expand-file-name erasmo-env-library-sword-directory))
   :init
   (erasmo-keybind-leader-key-def "si"
     '(dtk-bible :which-key "insert passage")))
