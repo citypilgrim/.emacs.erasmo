@@ -47,4 +47,10 @@
   :init (setq epg-pinentry-mode 'loopback)
   :config (pinentry-start))
 
+;; shorten package names
+;; According to [[https://www.emacswiki.org/emacs/DiminishedModes][Emacs Wiki]], the ~:diminish~ flag in ~use-package~ does not work on mode lines that use ~:eval~ forms. So we have to insert a small hack after each of these packages. Below is an example code, but also needed for ~buffer-face-mode~
+(use-package diminish
+  :init
+  (eval-after-load "face-remap" '(diminish 'buffer-face-mode)))t
+
 (provide 'erasmo-defaults)

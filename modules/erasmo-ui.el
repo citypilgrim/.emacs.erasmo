@@ -143,12 +143,6 @@
 (erasmo-keybind-leader-key-def
  "tm" '(erasmo-ui-hydra-theme-switcher/body :which-key "choose theme"))
 
-;; shorten package names
-;; According to [[https://www.emacswiki.org/emacs/DiminishedModes][Emacs Wiki]], the ~:diminish~ flag in ~use-package~ does not work on mode lines that use ~:eval~ forms. So we have to insert a small hack after each of these packages. Below is an example code, but also needed for ~buffer-face-mode~
-(use-package diminish
-  :init
-  (eval-after-load "face-remap" '(diminish 'buffer-face-mode)))
-
 ;; pretty modeline
 (use-package doom-modeline
   :config
