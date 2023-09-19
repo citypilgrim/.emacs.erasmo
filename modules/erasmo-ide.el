@@ -42,6 +42,41 @@
           (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
       (cmake-project-mode)))
 
+;;; structural editing
+
+;; structural editing with tree-sitter
+(use-package tree-sitter
+  :init
+  (setq treesit-language-source-alist
+        '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (cmake "https://github.com/uyha/tree-sitter-cmake")
+          (cpp "https://github.com/tree-sitter/tree-sitter-cpp.git")
+          (c "https://github.com/tree-sitter/tree-sitter-c.git")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (html "https://github.com/tree-sitter/tree-sitter-html")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (rust "https://github.com/hydro-project/rust-sitter.git")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (java "https://github.com/tree-sitter/tree-sitter-java.git")
+          (make "https://github.com/alemuller/tree-sitter-make")
+          (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (toml "https://github.com/tree-sitter/tree-sitter-toml")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+          (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+  (setq treesit-load-name-override-list '((rust "rust-sitter" "tree_sitter_rust"))))
+
+(setq major-mode-remap-alist
+      '((c++-mode . c++-ts-mode)
+        (python-mode . python-ts-mode)))
+
+;; to install
+;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
+
+
 ;;; language server
 
 ;; eglot
@@ -93,6 +128,7 @@ manually with something like this:
   (corfu-mode -1))
 
 (use-package lsp-mode
+  :after tree-sitter
   :commands (lsp lsp-deferred)
   :hook ((lsp-mode . erasmo-ide--lsp-mode-setup)
          (lsp-lens-mode . (lambda () (diminish 'lsp-lens-mode))))
@@ -170,7 +206,9 @@ manually with something like this:
 (use-package cc-mode
   :hook
   ((c-mode . erasmo-ide--setup-cc-mode)
-   (c++-mode . erasmo-ide--setup-cc-mode)))
+   (c-ts-mode . erasmo-ide--setup-cc-mode)
+   (c++-mode . erasmo-ide--setup-cc-mode)
+   (c++-ts-mode . erasmo-ide--setup-cc-mode)))
 
 ;;; python
 (add-hook 'python-mode-hook
@@ -219,35 +257,5 @@ manually with something like this:
 ;; mode, which shows either cover or no cover
 (use-package cov)
 
-
-;; structural editing with tree-sitter
-(setq treesit-language-source-alist
-   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-     (cmake "https://github.com/uyha/tree-sitter-cmake")
-     (cpp "https://github.com/tree-sitter/tree-sitter-cpp.git")
-     (c "https://github.com/tree-sitter/tree-sitter-c.git")
-     (css "https://github.com/tree-sitter/tree-sitter-css")
-     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-     (go "https://github.com/tree-sitter/tree-sitter-go")
-     (html "https://github.com/tree-sitter/tree-sitter-html")
-     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-     (rust "https://github.com/hydro-project/rust-sitter.git")
-     (json "https://github.com/tree-sitter/tree-sitter-json")
-     (java "https://github.com/tree-sitter/tree-sitter-java.git")
-     (make "https://github.com/alemuller/tree-sitter-make")
-     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-     (python "https://github.com/tree-sitter/tree-sitter-python")
-     (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
-(setq treesit-load-name-override-list '((rust "rust-sitter" "tree_sitter_rust")))
-
-(setq major-mode-remap-alist
-      '((c++-mode . c++-ts-mode)
-        (python-mode . python-ts-mode)))
-
-;; to install
-;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
 
 (provide 'erasmo-ide)
