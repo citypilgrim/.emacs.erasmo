@@ -211,7 +211,13 @@ manually with something like this:
    (c++-ts-mode . erasmo-ide--setup-cc-mode)))
 
 ;;; python
-(add-hook 'python-mode-hook
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-ts-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp-deferred))))  ; or lsp-deferred
+
+(add-hook 'python-ts-mode-hook
           (lambda ()
             (setq indent-tabs-mode nil
                   tab-width 4
