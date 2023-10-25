@@ -70,8 +70,10 @@
   (setq treesit-load-name-override-list '((rust "rust-sitter" "tree_sitter_rust"))))
 
 (setq major-mode-remap-alist
-      '((c++-mode . c++-ts-mode)
-        (python-mode . python-ts-mode)))
+      '(
+        ;; (c++-mode . c++-ts-mode)
+        (python-mode . python-ts-mode)
+        ))
 
 ;; to install
 ;; (mapc #'treesit-install-language-grammar (mapcar #'car treesit-language-source-alist))
