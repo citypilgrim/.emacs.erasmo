@@ -9,6 +9,19 @@
   ;; defining variables here so that org-agenda and org-capture can initialise
   (customize-set-variable 'org-roam-directory erasmo-env-org-roam-directory)
   (customize-set-variable 'org-roam-dailies-directory erasmo-env-org-roam-dailies-directory)
+
+  ;; redefining function for org-open-at-point
+  (defun erasmo-notes--visit-org-roam-dailies-at-point (id _)
+    (condition-case err
+        (org-roam-id-open id nil)
+      (error
+       (embark-org-copy-link-description)
+       (let ((file (concat erasmo-env-org-roam-dailies-directory (car kill-ring) ".org")))
+         (if (file-exists-p file)
+             (find-file file)
+           (error (error-message-string err)))))))
+  (org-link-set-parameters "id" :follow #'erasmo-notes--visit-org-roam-dailies-at-point)
+
   :custom
   (org-roam-completion-everywhere nil)
   :bind (
