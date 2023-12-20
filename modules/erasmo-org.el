@@ -143,10 +143,10 @@
 
 (setq org-tag-alist erasmo-env-org-tag-alist)
 
-;; modify the code below to only archive if the property ARCHIVE is not nil
-(add-hook 'org-after-todo-state-change-hook
-          (lambda () (when (and (not (string= (org-entry-get (point) "ARCHIVE") "NOARCHIVE")) (equal "DONE" org-state))
-                       (call-interactively #'org-archive-to-archive-sibling))))
+(defun erasmo-org-archive-done-tasks ()
+  "archive all DONE state headers in org file to sibling"
+  (interactive)
+  (org-map-entries 'org-archive-to-archive-sibling "/DONE" 'file))
 
 ;; agenda
 ;; show a timeline of scheduled tasks with org-agenda-list
