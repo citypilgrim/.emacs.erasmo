@@ -21,11 +21,17 @@
   (org-outline-path-complete-in-steps nil) ;refile in a single go
   (org-refile-use-outline-path t)       ;show full path when refiling
   (org-refile-allow-creating-parent-nodes 'confirm) ; allow refile to create parent tasks with confirmation
+  (org-enforce-todo-dependencies t)
   :init
   ;; auto tangle on save
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook
                                                 #'erasmo-org--babel-tangle-dont-ask
                                                 'run-at-end 'only-in-org-mode)))
+
+  ;; cache time logging history
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
+
   ;; org-agenda
   (add-hook 'org-agenda-after-show-hook #'org-mode)
   :config
