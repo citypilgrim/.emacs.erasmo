@@ -157,6 +157,7 @@
 ;; agenda
 ;; show a timeline of scheduled tasks with org-agenda-list
 (defun erasmo-org-set-org-agenda-files ()
+  (interactive)
   (setq org-agenda-files `(,erasmo-env-agenda-directory ,(concat erasmo-env-agenda-directory "secrets" ) ,erasmo-env-slipbox)))
 
 (add-hook 'after-init-hook #'erasmo-org-set-org-agenda-files)
