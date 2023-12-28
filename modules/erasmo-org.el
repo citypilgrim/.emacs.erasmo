@@ -61,14 +61,25 @@
   ;; Set faces for heading levels
   (set-face-attribute 'org-document-title nil :font "Iosevka Aile"
                       :weight 'bold :height 1.3)
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
+
+  ;; removing scaled headers for org column view to appear equal
+  ;; TODO implement advise function for org-column
+  ;; (dolist (face '((org-level-1 . 1.2)
+  ;;                 (org-level-2 . 1.1)
+  ;;                 (org-level-3 . 1.05)
+  ;;                 (org-level-4 . 1.0)
+  ;;                 (org-level-5 . 1.1)
+  ;;                 (org-level-6 . 1.1)
+  ;;                 (org-level-7 . 1.1)
+  ;;                 (org-level-8 . 1.1)))
+  (dolist (face '((org-level-1 . 1.0)
+                  (org-level-2 . 1.0)
+                  (org-level-3 . 1.0)
                   (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
+                  (org-level-5 . 1.0)
+                  (org-level-6 . 1.0)
+                  (org-level-7 . 1.0)
+                  (org-level-8 . 1.0)))
     (set-face-attribute (car face) nil :font "Iosevka Aile"
                         :weight 'regular :height (cdr face)))
 
@@ -76,6 +87,8 @@
   ;; Ensure that anything that should be fixed-pitch in Org files appears that way
   (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-date nil :inherit 'fixed-pitch) ;to help align when timestamp in org table
+  (set-face-attribute 'org-table-header nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-formula nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-code nil :inherit '(shadow fixed-pitch))
   (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
@@ -92,7 +105,6 @@
   ;; '(org-meta-line ((t (:inherit (font-lock-comment-face fixed-pitch)))))
   ;; '(org-property-value ((t (:inherit fixed-pitch))) t)
   ;; '(org-special-keyword ((t (:inherit (font-lock-comment-face fixed-pitch)))))
-  ;; '(org-table ((t (:inherit fixed-pitch :foreground "#83a598"))))
   ;; '(org-tag ((t (:inherit (shadow fixed-pitch) :weight bold :height 0.8))))
   ;; '(org-verbatim ((t (:inherit (shadow fixed-pitch))))))
   )
@@ -102,7 +114,21 @@
   :after org
   :init
   (global-org-modern-mode)
-  )
+  ;; setting timestamp faces to fixed pitch for alignment in table
+  (set-face-attribute 'org-modern-date-active nil
+                      :inherit 'fixed-pitch
+                      :foreground "black" :distant-foreground "white" :background "gray75")
+  (set-face-attribute 'org-modern-time-active nil
+                      :inherit 'fixed-pitch
+                      :foreground "black" :distant-foreground "white" :background "gray75")
+  (set-face-attribute 'org-modern-date-inactive nil
+                      :inherit 'fixed-pitch
+                      :foreground "gray5" :distant-foreground "gray95" :background "gray50")
+  (set-face-attribute 'org-modern-time-inactive nil
+                      :inherit 'fixed-pitch
+                      :foreground "gray5" :distant-foreground "gray95" :background "gray50")
+  :custom
+  (org-modern-table nil))
 
 ;; toggle hidden elements
 (use-package org-appear
@@ -164,7 +190,7 @@
 
 ;; refiling
 (setq org-refile-targets '((nil :maxlevel . 1)
-                           (org-agenda-files :maxlevel . 1)))
+                           (org-agenda-files :maxlevel . 2)))
 
 ;; seek out other tasks with org-agenda
 ;; org-agenda-custom-command-template determins the agenda view
