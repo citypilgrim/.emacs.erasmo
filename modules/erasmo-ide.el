@@ -50,7 +50,7 @@
   (setq treesit-language-source-alist
         '((bash "https://github.com/tree-sitter/tree-sitter-bash")
           (cmake "https://github.com/uyha/tree-sitter-cmake")
-          (cpp "https://github.com/tree-sitter/tree-sitter-cpp.git")
+          (c++ "https://github.com/tree-sitter/tree-sitter-cpp.git")
           (c "https://github.com/tree-sitter/tree-sitter-c.git")
           (css "https://github.com/tree-sitter/tree-sitter-css")
           (elisp "https://github.com/Wilfred/tree-sitter-elisp")
@@ -71,7 +71,7 @@
 
 (setq major-mode-remap-alist
       '(
-        ;; (c++-mode . c++-ts-mode)
+        (c++-mode . c++-ts-mode)
         (python-mode . python-ts-mode)
         ))
 
@@ -201,10 +201,13 @@ manually with something like this:
 
 ;;; c/c++ programming
 (defun erasmo-ide--setup-cc-mode ()
-  (maybe-cmake-project-mode)
+  (interactive)
   (lsp-deferred)
   (require 'dap-cpptools)
-  (dap-cpptools-setup))
+  (dap-cpptools-setup)
+  ;; (maybe-cmake-project-mode)
+  )
+
 (use-package cc-mode
   :hook
   ((c-mode . erasmo-ide--setup-cc-mode)

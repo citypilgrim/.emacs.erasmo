@@ -26,6 +26,7 @@
 (require 'erasmo-package)
 (require 'erasmo-performance)
 (require 'erasmo-defaults)
+(require 'erasmo-macros)
 (require 'erasmo-keybind)
 (require 'erasmo-completion)
 (require 'erasmo-ux)

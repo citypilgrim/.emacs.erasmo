@@ -3,6 +3,9 @@
 ;; keeping emacs clean
 (use-package no-littering)
 
+;; removing safety locks
+(put 'narrow-to-region 'disabled nil)
+
 ;; Keep customization settings in a temporary file
 (setq custom-file
       (if (boundp 'server-socket-dir)
