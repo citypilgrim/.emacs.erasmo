@@ -119,4 +119,11 @@
   :ensure t
   :bind ("C-c d" . docker))
 
+;; devsecops with gitlab
+(use-package gitlab-ci-mode)
+(use-package gitlab-ci-mode-flycheck
+  :after flycheck gitlab-ci-mode
+  :init
+  (gitlab-ci-mode-flycheck-enable))
+
 (provide 'erasmo-vc)
