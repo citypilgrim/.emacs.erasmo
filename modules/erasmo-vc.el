@@ -120,7 +120,10 @@
   :bind ("C-c d" . docker))
 
 ;; devsecops with gitlab
-(use-package gitlab-ci-mode)
+(use-package gitlab-ci-mode
+  :custom
+  (gitlab-ci-url erasmo-env-gitlab-ci-url)
+  (gitlab-ci-api-token erasmo-env-gitlab-ci-api-token))
 (use-package gitlab-ci-mode-flycheck
   :after flycheck gitlab-ci-mode
   :init
