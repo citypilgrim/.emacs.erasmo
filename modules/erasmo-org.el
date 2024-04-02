@@ -37,6 +37,11 @@
   :config
   (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
   (add-to-list 'org-babel-load-languages '(shell . t))
+  :bind
+  (("M-n" . org-metadown)
+   ("M-p" . org-metaup)
+   ("M-[" . org-metaleft)
+   ("M-]" . org-metaright))
   )
 
 (defun erasmo-org--babel-tangle-dont-ask ()

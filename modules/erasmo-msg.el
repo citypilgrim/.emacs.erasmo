@@ -73,8 +73,11 @@
   (message-mode . (lambda () (local-set-key (kbd "TAB") 'bbdb-complete-name)))
   (gnus-startup . bbdb-insinuate-gnus)
   :init
-  (bbdb-initialize 'message 'gnus 'sendmail))
-
+  (bbdb-initialize 'message 'gnus 'sendmail)
+  :custom
+  (bbdb-file (expand-file-name
+              (concat "~/.env/emacs/erasmo-env-"
+                      erasmo-env-user "-bbdb.el"))))
 
 ;;; IRC
 
