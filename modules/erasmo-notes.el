@@ -30,7 +30,8 @@
   (setq org-roam-node-display-template
         (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag))))
 
-;; redefining function for org-open-at-point
+;; redefining function for org-open-at-point to allow tracing org roam dailies that
+;; are outside the elisp db
 (defun erasmo-notes--visit-org-roam-dailies-at-point (id _)
   (condition-case err
       (org-roam-id-open id nil)
@@ -40,8 +41,12 @@
        (if (file-exists-p file)
            (find-file file)
          (error (error-message-string err)))))))
-(add-hook 'after-init-hook
-          (lambda () (org-link-set-parameters "id" :follow #'erasmo-notes--visit-org-roam-dailies-at-point)))
+(with-eval-after-load 'org
+  (org-link-set-parameters "id" :follow #'erasmo-notes--visit-org-roam-dailies-at-point))
+(add-hook 'org-roam-find-file-hook      ;find file seems to reset the follow parameters
+          (lambda () (org-link-set-parameters
+                      "id" :follow
+                      #'erasmo-notes--visit-org-roam-dailies-at-point)))
 
 (erasmo-keybind-leader-key-def
   "nd" '(:ignore t :which-key "dailies"))
