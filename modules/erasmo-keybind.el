@@ -104,9 +104,11 @@
 
   ;; notes
   "na" '((lambda () (interactive) (consult-find erasmo-env-agenda-directory)) :which-key "agenda")
+  "nA" '((lambda () (interactive) (consult-find erasmo-env-default-agenda-directory)) :which-key "default agenda")
   "no" '((lambda () (interactive) (consult-find erasmo-env-org-directory)) :which-key "org")
   "ns" '(:ignore t :which-key "search files")
   "nsa" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-agenda-directory)) :which-key "agenda")
+  "nsA" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-default-agenda-directory)) :which-key "default agenda")
   "nso" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-directory)) :which-key "org")
   "nsf" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-roam-directory)) :which-key "roam")
   "nsd" '((lambda () (interactive) (erasmo-keybind--search-files erasmo-env-org-roam-dailies-directory)) :which-key "dailies"))
