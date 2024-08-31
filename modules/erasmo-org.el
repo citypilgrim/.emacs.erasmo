@@ -34,9 +34,13 @@
 
   ;; org-agenda
   (add-hook 'org-agenda-after-show-hook #'org-mode)
+
   :config
   (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
   (add-to-list 'org-babel-load-languages '(shell . t))
+  (add-to-list 'org-babel-load-languages '(R . t))
+  (setq org-babel-R-command "/root/.guix-home/profile/bin/R --slave --no-save")
+
   :bind
   (("M-n" . org-metadown)
    ("M-p" . org-metaup)
