@@ -35,11 +35,12 @@
   ;; org-agenda
   (add-hook 'org-agenda-after-show-hook #'org-mode)
 
-  :config
-  (add-to-list 'org-babel-load-languages '(C . t)) ;org blocks should be for "C" not "c"
-  (add-to-list 'org-babel-load-languages '(shell . t))
-  (add-to-list 'org-babel-load-languages '(R . t))
-  (setq org-babel-R-command "/root/.guix-home/profile/bin/R --slave --no-save")
+  ;; babel
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (gnuplot . t)
+     (R . t)))
 
   :bind
   (("M-n" . org-metadown)
@@ -342,5 +343,9 @@
 (customize-set-variable 'org-mobile-directory erasmo-env-org-mobile-directory)
 (customize-set-variable 'org-mobile-use-encryption t)
 (customize-set-variable 'org-mobile-encryption-password erasmo-env-org-mobile-encryption-password)
+
+;; gnuplot
+(require 'org-plot)
+(use-package gnuplot)
 
 (provide 'erasmo-org)
