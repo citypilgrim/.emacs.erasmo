@@ -344,8 +344,11 @@
 (customize-set-variable 'org-mobile-use-encryption t)
 (customize-set-variable 'org-mobile-encryption-password erasmo-env-org-mobile-encryption-password)
 
-;; gnuplot
+;;; gnuplot
 (require 'org-plot)
 (use-package gnuplot)
+
+;;; plugins
+(use-package orgtbl-aggregate)          ;generate summary tables
 
 (provide 'erasmo-org)
