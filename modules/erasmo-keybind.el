@@ -95,7 +95,7 @@
   "fc" '((lambda () (interactive) (consult-find "~/.emacs.d" "erasmo-")) :which-key "config")
   "fC" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "config")
   "fe" '((lambda () (interactive) (find-file "~/.env/emacs/erasmo-env.el")) :which-key "env")
-  "fg" '((lambda () (interactive) (find-file "~/erasmo/examples/src/citypilgrim/packages.scm")) :which-key "guix")
+  "fg" '((lambda () (interactive) (find-file "~/src/erasmo/examples/src/citypilgrim/packages.scm")) :which-key "guix")
   "fs" '((lambda () (interactive) (find-file erasmo-env-slipbox)) :which-key "slipbox")
 
   "fl" '(:ignore t :which-key "library")
