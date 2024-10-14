@@ -89,6 +89,10 @@
            (file-relative-name (org-roam-node-file node) org-roam-directory))))
       (error ""))))
 
+(use-package citar-org-roam
+  :after (citar org-roam)
+  :config (citar-org-roam-mode))
+
 (eval-after-load 'citar
   (defun erasmo-notes-org-roam-node-from-cite (keys-entries)
     (interactive (list (citar-select-ref :filter nil)))
@@ -109,8 +113,8 @@
                          :props '(:finalize find-file)))))
 
 (erasmo-keybind-leader-key-def
- "nr" '(erasmo-notes-org-roam-node-from-cite :which-key "new reference")
- "nT" '((lambda (ref) (interactive "sRef: ") (org-roam-ref-add ref)) :which-key "org-roam-ref-add"))
+  "nr" '(erasmo-notes-org-roam-node-from-cite :which-key "new reference")
+  "nT" '((lambda (ref) (interactive "sRef: ") (org-roam-ref-add ref)) :which-key "org-roam-ref-add"))
 
 ;; visualising note network on localhost:35901
 (use-package org-roam-ui
