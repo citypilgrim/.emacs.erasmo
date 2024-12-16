@@ -100,6 +100,7 @@
 
   "fl" '(:ignore t :which-key "library")
   "flc" '((lambda () (interactive) (consult-find "~/library/christian")) :which-key "christian")
+  "flp" '((lambda () (interactive) (consult-find "~/library/physics")) :which-key "physics")
   "fls" '((lambda () (interactive) (consult-find "~/library/software")) :which-key "software")
 
   ;; notes
