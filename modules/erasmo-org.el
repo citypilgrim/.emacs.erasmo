@@ -136,9 +136,7 @@
                       :foreground "gray5" :distant-foreground "gray95" :background "gray50")
   (set-face-attribute 'org-modern-time-inactive nil
                       :inherit 'fixed-pitch
-                      :foreground "gray5" :distant-foreground "gray95" :background "gray50")
-  :custom
-  (org-modern-table nil))
+                      :foreground "gray5" :distant-foreground "gray95" :background "gray50"))
 
 ;; toggle hidden elements
 (use-package org-appear
