@@ -89,28 +89,29 @@
            (file-relative-name (org-roam-node-file node) org-roam-directory))))
       (error ""))))
 
-(use-package citar-org-roam
-  :after (citar org-roam)
-  :config (citar-org-roam-mode))
+;; TODO fix, complaining incorrect number of arguments
+;; (use-package citar-org-roam
+;;   :after (citar org-roam)
+;;   :config (citar-org-roam-mode))
 
-(eval-after-load 'citar
-  (defun erasmo-notes-org-roam-node-from-cite (keys-entries)
-    (interactive (list (citar-select-ref :filter nil)))
-    (let ((title (citar-format--entry
-                  "${author editor} :: ${title}"
-                  (citar-get-entry keys-entries))))
-      (org-roam-capture- :templates
-                         '(("r" "reference" plain "%?" :if-new
-                            (file+head "reference/${citekey}.org"
-                                       ":PROPERTIES:
-:ROAM_REFS: [cite:@${citekey}]
-:END:
-#+title: ${title}\n")
-                            :immediate-finish t
-                            :unnarrowed t))
-                         :info (list :citekey keys-entries)
-                         :node (org-roam-node-create :title title)
-                         :props '(:finalize find-file)))))
+;; (eval-after-load 'citar
+;;   (defun erasmo-notes-org-roam-node-from-cite (keys-entries)
+;;     (interactive (list (citar-select-ref :filter nil)))
+;;     (let ((title (citar-format--entry
+;;                   "${author editor} :: ${title}"
+;;                   (citar-get-entry keys-entries))))
+;;       (org-roam-capture- :templates
+;;                          '(("r" "reference" plain "%?" :if-new
+;;                             (file+head "reference/${citekey}.org"
+;;                                        ":PROPERTIES:
+;; :ROAM_REFS: [cite:@${citekey}]
+;; :END:
+;; #+title: ${title}\n")
+;;                             :immediate-finish t
+;;                             :unnarrowed t))
+;;                          :info (list :citekey keys-entries)
+;;                          :node (org-roam-node-create :title title)
+;;                          :props '(:finalize find-file)))))
 
 (erasmo-keybind-leader-key-def
   "nr" '(erasmo-notes-org-roam-node-from-cite :which-key "new reference")
