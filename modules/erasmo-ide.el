@@ -253,6 +253,11 @@ manually with something like this:
   :init
   (add-to-list 'auto-mode-alist '("\\build.gradle\\'" . groovy-mode)))
 
+;; antlr
+(use-package antlr-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode)))
+
 ;;; docker
 (use-package dockerfile-mode)
 
