@@ -261,6 +261,9 @@ manually with something like this:
 ;;; docker
 (use-package dockerfile-mode)
 
+;; protobuf
+(use-package protobuf-mode)
+
 ;; debugging with gdb
 (use-package gdb-mi
   :custom
