@@ -113,28 +113,26 @@
   "
          Dark                ^Light^
     ----------------------------------------------
-    _1_ zenburn          _w_ day
-    _2_ fairy-floss      _e_ duo
-    _3_ nova             _r_ solar
-    _4_ palenight        _t_ flatwhite
-    _5_ peacock          ^
-    _6_ snazzy           ^
+    _1_ zenburn          _w_ tomorrow
+    _2_ palenight        _e_ duo
+    _3_ oksolar          _r_ bluloco
+    _4_ bluloco          _t_ tomorrow
+    _5_ tomorrow         ^
     _q_ quit             ^
     ^                    ^
     "
   ;; Dark
   ("1" (erasmo-ui--load-theme 'doom-zenburn) "zenburn")
-  ("2" (erasmo-ui--load-theme 'doom-fairy-floss) "fairy-floss")
-  ("3" (erasmo-ui--load-theme 'doom-nova) "nova")
-  ("4" (erasmo-ui--load-theme 'doom-palenight) "palenight")
-  ("5" (erasmo-ui--load-theme 'doom-peacock) "peacock")
-  ("6" (erasmo-ui--load-theme 'doom-snazzy) "snazzy")
+  ("2" (erasmo-ui--load-theme 'doom-palenight) "palenight")
+  ("3" (erasmo-ui--load-theme 'doom-oksolar-dark) "oksolar")
+  ("4" (erasmo-ui--load-theme 'doom-bluloco-dark) "bluloco")
+  ("5" (erasmo-ui--load-theme 'doom-tomorrow-night) "tomorrow")
 
   ;; Light
-  ("w" (erasmo-ui--load-theme 'ef-day) "day")
-  ("e" (erasmo-ui--load-theme 'ef-duo-light) "duo")
-  ("r" (erasmo-ui--load-theme 'doom-solarized-light) "solar")
-  ("t" (erasmo-ui--load-theme 'doom-flatwhite) "flatwhite")
+  ("w" (erasmo-ui--load-theme 'doom-solarized-light) "solarized")
+  ("e" (erasmo-ui--load-theme 'doom-oksolar-light) "oksolar")
+  ("r" (erasmo-ui--load-theme 'doom-bluloco-light) "bluloco")
+  ("t" (erasmo-ui--load-theme 'doom-tomorrow-day) "tomorrow")
 
   ("q" nil))
 
