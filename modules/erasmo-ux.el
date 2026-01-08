@@ -44,10 +44,10 @@
   (global-set-key (kbd "C-.") 'undo-fu-only-redo))
 
 ;; replace-string command to be case sensitive
-(defadvice replace-string (around turn-off-case-fold-search)
-  (let ((case-fold-search nil))
-    ad-do-it))
-(ad-activate 'replace-string)
+;; (defadvice replace-string (around turn-off-case-fold-search)
+;;   (let ((case-fold-search nil))
+;;     ad-do-it))
+;; (ad-activate 'replace-string)
 
 ;; mouse scrolling
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;one line at a time

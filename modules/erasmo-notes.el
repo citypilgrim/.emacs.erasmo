@@ -51,32 +51,37 @@
 (erasmo-keybind-leader-key-def
   "nd" '(:ignore t :which-key "dailies"))
 
-;; slipbox method as inspired by the author himself, Jethro
 (setq org-roam-capture-templates
-      '(("m" "main" plain
-         "%?"
-         :if-new (file+head "main/${slug}.org"
-                            "#+title: ${title}\n#+filetags: :draft:\n")
+      `(("a" "article" plain "\n*Link*: %?\n\n"
+         :if-new
+         (file+head "article/${title}.org"
+                    ,(concat "#+title: ${title}\n"
+                             "#+date: %u\n"
+                             "#+hugo_lastmod: %u\n"
+                             "#+hugo_tags: noexport"))
          :immediate-finish t
-         :unnarrowed t)
-        ("r" "reference" plain "%?"
+         :unnarrowed t
+         :empty-lines-after 1)
+        ("r" "reference" plain "\n*Link*: %?\n\n"
          :if-new
          (file+head "reference/${title}.org"
-                    "#+title: ${title}\n#+filetags: :draft:\n")
+                    ,(concat "#+title: ${title}\n"
+                             "#+date: %u\n"
+                             "#+hugo_lastmod: %u\n"
+                             "#+hugo_tags: noexport"))
          :immediate-finish t
-         :unnarrowed t)
-        ("a" "article" plain "%?"
+         :unnarrowed t
+         :empty-lines-after 1)
+        ("s" "secret" plain "\n*Link*: %?\n\n"
          :if-new
-         (file+head "articles/${title}.org"
-                    "#+title: ${title}\n#+filetags: :draft:\n")
+         (file+head "secret/${title}.org"
+                    ,(concat "#+title: ${title}\n"
+                             "#+date: %u\n"
+                             "#+hugo_lastmod: %u\n"
+                             "#+hugo_tags: noexport"))
          :immediate-finish t
-         :unnarrowed t)
-        ("s" "secret" plain "%?"
-         :if-new
-         (file+head "secrets/${title}.org"
-                    "#+title: ${title}\n#+filetags: :draft:\n")
-         :immediate-finish t
-         :unnarrowed t)))
+         :unnarrowed t
+         :empty-lines-after 1)))
 
 ;; displaying categories
 (with-eval-after-load 'org-roam
@@ -342,6 +347,52 @@ assuming the file exists within the directory."
                              :finalize 'insert-link))))))
       (deactivate-mark))))
 
+;; Static Site Generation
+(use-package ox-hugo)
 
+(with-eval-after-load 'org ;; Update last modified date for ox-hugo export
+  (setq time-stamp-active t
+        time-stamp-start "#\\+hugo_lastmod:[ \t]*"
+        time-stamp-end "$"
+        time-stamp-format "\[%Y-%m-%d\]")
+  (add-hook 'before-save-hook 'time-stamp))
+
+(defun erasmo-notes--slugify (s)
+  "Convert string S into a Hugo-safe slug."
+  (let* ((s (downcase (or s "")))
+         (s (replace-regexp-in-string "[^a-z0-9]+" "-" s))
+         (s (replace-regexp-in-string "^-+" "" s))
+         (s (replace-regexp-in-string "-+$" "" s)))
+    s))
+
+(defun erasmo-notes-dailies-heading-to-hugo-post ()
+  "Convert the current Org heading into a Hugo-publishable subtree."
+  (interactive)
+  (unless (org-at-heading-p)
+    (user-error "Not at an Org heading"))
+
+  (save-excursion
+    (org-back-to-heading t)
+
+    (let* ((title (org-get-heading t t t t))
+           (date  (format-time-string "%Y-%m-%d"))
+           (slug  (erasmo-notes--slugify title))
+           (export-name (concat "dailies/" date "-" slug)))
+
+      ;; Ensure PROPERTIES drawer
+      (org-set-property "EXPORT_FILE_NAME" export-name)
+
+      ;; Set hugo_lastmod (as subtree keyword)
+      (org-set-property "HUGO_LASTMOD"
+                        (format-time-string "%Y-%m-%d"))
+
+      ;; Remove noexport tag if present
+      (save-restriction
+        (org-narrow-to-subtree)
+        (goto-char (point-min))
+        (while (re-search-forward "^#\\+hugo_tags:.*noexport.*$" nil t)
+          (replace-match "#+hugo_tags:" t t)))
+
+    (message "Heading marked for Hugo export"))))
 
 (provide 'erasmo-notes)

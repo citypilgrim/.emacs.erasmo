@@ -329,19 +329,6 @@
   "oc" '(org-capture t :which-key "capture")
   "ox" '(org-export-dispatch t :which-key "export"))
 
-;;; org-mobile
-(require 'org-mobile)
-(setq org-directory erasmo-env-org-directory)
-(customize-set-variable 'org-mobile-agendas 'all)
-(customize-set-variable 'org-mobile-files
-                        (append
-                         (erasmo-util-ls-dirs erasmo-env-org-roam-directory "secret")
-                         `(,erasmo-env-agenda-directory)))
-(customize-set-variable 'org-mobile-inbox-for-pull erasmo-env-slipbox)
-(customize-set-variable 'org-mobile-directory erasmo-env-org-mobile-directory)
-(customize-set-variable 'org-mobile-use-encryption t)
-(customize-set-variable 'org-mobile-encryption-password erasmo-env-org-mobile-encryption-password)
-
 ;;; gnuplot
 (require 'org-plot)
 (use-package gnuplot)
