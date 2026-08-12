@@ -365,9 +365,41 @@ assuming the file exists within the directory."
          (s (replace-regexp-in-string "-+$" "" s)))
     s))
 
+(defun erasmo-notes--dailies-file-p (&optional file)
+  "Return non-nil when FILE lives under the org-roam dailies directory.
+
+FILE defaults to the file visited by the current buffer."
+  (let ((file (or file (buffer-file-name))))
+    (and file
+         (file-in-directory-p
+          file (expand-file-name erasmo-env-org-roam-dailies-directory)))))
+
+(defun erasmo-notes--dailies-date ()
+  "Return the date of the current dailies buffer as a YYYY-MM-DD string.
+
+Dailies are named after their date, so the file name is the source of
+truth.  Fall back to today for any other buffer."
+  (let ((base (and (buffer-file-name)
+                   (file-name-base (buffer-file-name)))))
+    (if (and base (string-match-p "\\`[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\'" base))
+        base
+      (format-time-string "%Y-%m-%d"))))
+
 (defun erasmo-notes-dailies-heading-to-hugo-post ()
-  "Convert the current Org heading into a Hugo-publishable subtree."
+  "Convert the current Org heading into a Hugo-publishable subtree.
+
+Sets the ox-hugo subtree properties that `org-hugo-auto-export-mode'
+needs to publish the heading to the Jardin on save, and clears the
+markers that would otherwise exclude it from export.  The post date
+comes from the dailies file itself, while lastmod is refreshed to
+today on every run.
+
+Only dailies may be published this way; the section and date scheme
+below assume it."
   (interactive)
+  (unless (erasmo-notes--dailies-file-p)
+    (user-error "Not visiting a dailies file under %s"
+                erasmo-env-org-roam-dailies-directory))
   (unless (org-at-heading-p)
     (user-error "Not at an Org heading"))
 
@@ -375,24 +407,68 @@ assuming the file exists within the directory."
     (org-back-to-heading t)
 
     (let* ((title (org-get-heading t t t t))
-           (date  (format-time-string "%Y-%m-%d"))
+           (date  (erasmo-notes--dailies-date))
            (slug  (erasmo-notes--slugify title))
-           (export-name (concat "dailies/" date "-" slug)))
+           (export-name (concat date "-" slug)))
+      (when (string-empty-p slug)
+        (user-error "Heading %S has no sluggable title" title))
 
-      ;; Ensure PROPERTIES drawer
+      ;; Ensure PROPERTIES drawer.  The `EXPORT_' prefix is what makes
+      ;; ox-hugo pick these up as subtree-level front matter; the
+      ;; section subdirectory comes from `org-hugo-section' instead.
       (org-set-property "EXPORT_FILE_NAME" export-name)
+      (org-set-property "EXPORT_DATE" date)
+      (org-set-property "EXPORT_HUGO_LASTMOD" (format-time-string "%Y-%m-%d"))
 
-      ;; Set hugo_lastmod (as subtree keyword)
-      (org-set-property "HUGO_LASTMOD"
-                        (format-time-string "%Y-%m-%d"))
+      ;; An exclude tag on the heading stops ox-hugo before it even
+      ;; looks at the subtree
+      (org-set-tags (seq-difference (org-get-tags nil t) org-export-exclude-tags))
 
-      ;; Remove noexport tag if present
+      ;; ...and so does a leftover noexport in the hugo_tags keyword,
+      ;; which the roam capture templates leave behind.  Drop the
+      ;; keyword entirely once nothing else is left in it.
       (save-restriction
         (org-narrow-to-subtree)
         (goto-char (point-min))
-        (while (re-search-forward "^#\\+hugo_tags:.*noexport.*$" nil t)
-          (replace-match "#+hugo_tags:" t t)))
+        (while (re-search-forward "^#\\+hugo_tags:\\(.*\\)$" nil t)
+          ;; Grab the bounds before `replace-regexp-in-string' clobbers
+          ;; the match data
+          (let* ((beg (match-beginning 0))
+                 (end (match-end 0))
+                 (tags (string-trim
+                        (replace-regexp-in-string
+                         "\\_<noexport\\_>" "" (match-string 1)))))
+            (delete-region beg end)
+            (goto-char beg)
+            (if (string-empty-p tags)
+                (when (eq (char-after) ?\n)
+                  (delete-char 1))
+              (insert "#+hugo_tags: " tags)))))
 
-    (message "Heading marked for Hugo export"))))
+      (message "Marked %S for export as %s" title export-name))))
+
+(defun erasmo-notes--export-marked-subtrees ()
+  "Publish only the subtrees explicitly marked for export.
+
+`org-hugo-export-wim-to-md' falls back to a whole-file export whenever
+a buffer holds no marked subtree, which would turn every daily, agenda
+file and the slipbox into a Jardin page just by saving it.  Nothing is
+published here until `erasmo-notes-dailies-heading-to-hugo-post' has
+been run on at least one heading."
+  (require 'ox-hugo)
+  (unless (eq real-this-command 'org-capture-finalize)
+    (when (org-hugo--buffer-has-valid-post-subtree-p)
+      (save-excursion
+        (org-hugo-export-wim-to-md :all-subtrees)))))
+
+(define-minor-mode erasmo-notes-auto-export-mode
+  "Publish marked subtrees of this buffer to the Jardin on save.
+
+Like `org-hugo-auto-export-mode', minus its whole-file fallback."
+  :global nil
+  :lighter " jardin"
+  (if erasmo-notes-auto-export-mode
+      (add-hook 'after-save-hook #'erasmo-notes--export-marked-subtrees :append :local)
+    (remove-hook 'after-save-hook #'erasmo-notes--export-marked-subtrees :local)))
 
 (provide 'erasmo-notes)
